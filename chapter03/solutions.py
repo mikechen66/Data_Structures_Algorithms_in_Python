@@ -1,7 +1,7 @@
 
-# C3 Algorithm Analysis 
-# Data Structure and Algorithm in Python 
+# Algorithm Analysis 
 
+########################################################################################################
 
 # Part One. Reinforcement
 
