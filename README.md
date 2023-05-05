@@ -2,13 +2,13 @@
 
 Make the comprehenisve arrganements including original smaples, sample calls and solutions to the excercises. 
 
-# Sample Calls 
+## Sample Calls 
 
 Since the textbook only includes incomplete sample applications, readers are hard to find how to call them. 
 So I provide the sample calls that include complete callers for easy understanding of the data structure and
 algorithms. 
 
-# Solutions
+## Solutions
 
 Due to solutions distributed in everywhere in the web and most of them being very incomplete, I try to combine 
 the incomplete solutions together, make some improvement and add comparing alternatives to highlight algotithms,
