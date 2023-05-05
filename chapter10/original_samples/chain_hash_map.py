@@ -19,8 +19,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 from .hash_map_base import HashMapBase
 from .unsorted_table_map import UnsortedTableMap
+
 
 class ChainHashMap(HashMapBase):
   """Hash map implemented with separate chaining for collision resolution."""
