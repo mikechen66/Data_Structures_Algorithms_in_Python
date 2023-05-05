@@ -19,8 +19,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 from ..ch08.linked_binary_tree import LinkedBinaryTree
 from ..ch10.map_base import MapBase
+
 
 class TreeMap(LinkedBinaryTree, MapBase):
   """Sorted map implementation using a binary search tree."""
