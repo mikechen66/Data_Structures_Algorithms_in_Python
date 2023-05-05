@@ -15,4 +15,7 @@ the incomplete solutions together, make some improvement and add comparing alter
 functions, methods going around important data structures. I also offer independent programs of program running. 
 All of offerings provide a for holisticunderstanding of Python Algorithms. 
 
+
+## Additional Notes 
+
 Thanks for all the contributions provided in the Github and web. 
