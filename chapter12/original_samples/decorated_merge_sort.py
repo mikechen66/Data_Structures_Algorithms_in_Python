@@ -19,7 +19,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 from .merge_array import merge_sort
+
 
 class _Item:
   """Lightweight composite to store decorated value for sorting."""
