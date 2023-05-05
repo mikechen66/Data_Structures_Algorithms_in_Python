@@ -12,10 +12,10 @@ algorithms.
 
 Due to solutions distributed in everywhere in the web and most of them being very incomplete, I try to combine 
 the incomplete solutions together, make some improvement and add comparing alternatives to highlight algotithms,
-functions, methods going around important data structures. I also offer independent programs of program running. 
-All of offerings provide a for holisticunderstanding of Python Algorithms. 
+functions, methods going around important data structures. It also includes independent program for running. 
+All of offerings provide a holistic understanding of Python Algorithms. 
 
 
-## Additional Notes 
+## Notes 
 
 Thanks for all the contributions provided in the Github and web. 
