@@ -19,6 +19,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
 def find_boyer_moore(T, P):
   """Return the lowest index of T at which substring P begins (or else -1)."""
   n, m = len(T), len(P)                   # introduce convenient notations
