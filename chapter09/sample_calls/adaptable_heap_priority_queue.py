@@ -53,3 +53,67 @@ class AdaptableHeapPriorityQueue(HeapPriorityQueue):
             self._data.pop()                 # remove it from the list
             self._bubble(j)                  # fix item displaced by the swap
         return (loc._key, loc._value)             
+
+
+
+if __name__ == '__main__':
+    q = AdaptableHeapPriorityQueue()
+    q.add(4,  'Adam Grant')
+    q.add(5,  'John Manning')
+    q.add(6,  'Phllips Jordan')
+    q.add(15, 'Harris Diamond')
+    q.add(9,  'Steve Jobs')
+    q.add(7,  'Bill Gates')
+    q.add(20, 'Duncan Lee')
+    q.add(16, 'Lewis Smith')
+    result = []
+    for item in q._data:
+        print(item)
+        result.append(item)
+    print(result)
+    (token1, token2, token3, token4, token5, token6, token7, token8) = result
+    print('Please the first client stand out of the queue：', q.min()[1]) 
+    q.update(token5, 1, 'the CEO of Apple Computer')  
+    print('Who is the next client：', q.min()[1])  
+    q.remove(token1)  
+    result_update = []
+    for item in q._data:
+        print(item)
+        result_update.append(item)
+    print(result_update) 
+
+
+# Output:
+
+
+"""
+(4,Adam Grant)
+(5,John Manning)
+(6,Phllips Jordan)
+(15,Harris Diamond)
+(9,Steve Jobs)
+(7,Bill Gates)
+(20,Duncan Lee)
+(16,Lewis Smith)
+(4,Adam Grant)
+(5,John Manning)
+(6,Phllips Jordan)
+(15,Harris Diamond)
+(9,Steve Jobs)
+(7,Bill Gates)
+(20,Duncan Lee)
+(16,Lewis Smith)
+[(4,Adam Grant), (5,John Manning), (6,Phllips Jordan), (15,Harris Diamond), (9,Steve Jobs), (7,Bill Gates), (20,Duncan Lee), (16,Lewis Smith)]
+Please the first client stand out of the queue： Adam Grant
+Who is the next client： the CEO of Apple Computer
+(4, 'Adam Grant')
+(1,the CEO of Apple Computer)
+(5,John Manning)
+(6,Phllips Jordan)
+(15,Harris Diamond)
+(16,Lewis Smith)
+(7,Bill Gates)
+(20,Duncan Lee)
+[(1,the CEO of Apple Computer), (5,John Manning), (6,Phllips Jordan), (15,Harris Diamond), (16,Lewis Smith), (7,Bill Gates), (20,Duncan Lee)]
+
+"""
