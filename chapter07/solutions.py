@@ -13,6 +13,25 @@
 # given only reference to the first node of each list, into a single list that contains 
 # all the nodes of followed by all nodes of M. 
 
+"""
+
+The caller also can use the list() to concatenate the two independent list.
+
+if __name__ == '__main__':
+    L = LinkedStack()
+    L.push(5)
+    L.push(4)
+    L.push(3)
+    [i for i in L]
+    M = LinkedStack()
+    M.push(3)
+    M.push(2)
+    M.push(1)
+    [i for i in M]
+    N = list(L) + list(M)
+    print(N)
+"""
+
 
 import copy
 
