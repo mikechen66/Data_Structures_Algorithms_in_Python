@@ -1,6 +1,6 @@
 
 
-# double_linked_base.py
+# doubly_linked_base.py
 
 
 class _DoublyLinkedBase:
