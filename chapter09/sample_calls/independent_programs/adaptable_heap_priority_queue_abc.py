@@ -64,6 +64,10 @@ class PriorityQueueBase(metaclass=ABCMeta):
 # from priority_queue import PriorityQueueBase
 
 
+class Empty(Exception):
+    pass
+
+
 class HeapPriorityQueue(PriorityQueueBase): # base class defines _Item
     """A min-oriented priority queue implemented with a binary heap."""
     #------------------------------ basic behaviors ------------------------------

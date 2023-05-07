@@ -8,7 +8,6 @@
 # 1.piorirty_queue_base.py
 
 
-
 class PriorityQueueBase:
     """Abstract base class for a priority queue."""
     #-------------------------------- nested _Item class ------------------------------
@@ -61,6 +60,10 @@ class PriorityQueueBase:
 
 
 # from priority_queue import PriorityQueueBase
+
+
+class Empty(Exception):
+    pass
 
 
 class HeapPriorityQueue(PriorityQueueBase): # base class defines _Item
