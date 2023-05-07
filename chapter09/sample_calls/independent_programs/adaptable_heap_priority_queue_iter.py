@@ -8,9 +8,6 @@
 # 1.piorirty_queue_base.py
 
 
-class Empty(Exception):
-    pass
-
 
 class PriorityQueueBase:
     """Abstract base class for a priority queue."""
