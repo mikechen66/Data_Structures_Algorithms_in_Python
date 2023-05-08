@@ -58,10 +58,7 @@ class PriorityQueueBase(metaclass=ABCMeta):
 ####################################################################################################################
 
 
-# 2.heap_priority_queue.py
-
-
-# from priority_queue import PriorityQueueBase
+# 2.heap_priority_queue
 
 
 class Empty(Exception):
@@ -78,7 +75,7 @@ class HeapPriorityQueue(PriorityQueueBase): # base class defines _Item
         # Return the number of items in the priority queue.
         return len(self._data)
     def __iter__(self):
-        """生成优先级队列中所有记录的一个迭代"""
+        # Generate all records of priority queue iteratively
         for each in self._data:
             yield each
     #------------------------------ public behaviors ------------------------------
@@ -140,10 +137,7 @@ class HeapPriorityQueue(PriorityQueueBase): # base class defines _Item
 ####################################################################################################################
 
 
-# 3.adaptable_heap_priority_queue.py
-
-
-# from heap_priority_queue import HeapPriorityQueue
+# 3.adaptable_heap_priority_queue
 
 
 class AdaptableHeapPriorityQueue(HeapPriorityQueue):
