@@ -184,10 +184,6 @@ class PriorityQueueBase:
         # Return the number of items in the priority queue.
         raise NotImplementedError('must be implemented by subclass')
     def __str__(self):
-        """
-        返回对象的字符串表示形式，使得可以使用print(obj)语法打印对象obj得到直观的字符串
-        :return: 对象的字符串表示形式
-        """
         return str(list(self))
     #-------------------------------- public behaviors --------------------------------
     def is_empty(self):                  # concrete method assuming abstract len
@@ -229,7 +225,7 @@ class UnsortedPriorityQueue(PriorityQueueBase): # base class defines _Item
         # Return the number of items in the priority queue.
         return len(self._data)
     def __iter__(self):
-        """生成优先级队列中所有记录的一个迭代"""
+        # Generate all records ofpriority queue iteratively.
         cursor = self._data.first()
         while cursor is not None:
             item = cursor.element()
@@ -287,7 +283,7 @@ class SortedPriorityQueue(PriorityQueueBase): # base class defines _Item
         # Return the number of items in the priority queue."""
         return len(self._data)
     def __iter__(self):
-        """生成优先级队列中所有记录的一个迭代"""
+        # Generate all records ofpriority queue iteratively.
         cursor = self._data.first()
         while cursor is not None:
             item = cursor.element()
