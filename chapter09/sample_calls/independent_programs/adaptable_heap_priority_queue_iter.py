@@ -5,7 +5,7 @@
 
 ############################################################################################
 
-# 1.piorirty_queue_base.py
+# 1.piorirty_queue_base
 
 
 class PriorityQueueBase:
@@ -28,10 +28,6 @@ class PriorityQueueBase:
         # Return the number of items in the priority queue.
         raise NotImplementedError('must be implemented by subclass')
     def __str__(self):
-        """
-        返回对象的字符串表示形式，使得可以使用print(obj)语法打印对象obj得到直观的字符串
-        :return: 对象的字符串表示形式
-        """
         return str(list(self))
     #-------------------------------- public behaviors --------------------------------
     def is_empty(self):                  # concrete method assuming abstract len
@@ -56,10 +52,7 @@ class PriorityQueueBase:
 ############################################################################################
 
 
-# 2.heap_priority_queue.py
-
-
-# from priority_queue import PriorityQueueBase
+# 2.heap_priority_queue
 
 
 class Empty(Exception):
@@ -76,7 +69,7 @@ class HeapPriorityQueue(PriorityQueueBase): # base class defines _Item
         # Return the number of items in the priority queue.
         return len(self._data)
     def __iter__(self):
-        """生成优先级队列中所有记录的一个迭代"""
+        # Generate all records of priority queue iteratively
         for each in self._data:
             yield each
     def add(self, key, value):
@@ -137,10 +130,7 @@ class HeapPriorityQueue(PriorityQueueBase): # base class defines _Item
 ############################################################################################
 
 
-# 3.adaptable_heap_priority_queue.py
-
-
-# from heap_priority_queue import HeapPriorityQueue
+# 3.adaptable_heap_priority_queue
 
 
 class AdaptableHeapPriorityQueue(HeapPriorityQueue):
