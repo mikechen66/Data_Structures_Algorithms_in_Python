@@ -1,5 +1,3 @@
-
-
 # avl_tree.py
 
 
@@ -56,3 +54,18 @@ class AVLTreeMap(TreeMap):
         self._rebalance(p)
     def _rebalance_delete(self, p):
         self._rebalance(p)
+
+
+if __name__ == '__main__':
+    atp = AVLTreeMap()
+    root = atp._add_root('a')
+    b = atp._add_left(root,'b')
+    c = atp._add_right(root,'c')
+    print(list(map(atp.Position.element,[root,b,c])),root==atp.parent(b))
+
+
+# Output:
+
+"""
+['a', 'b', 'c'] True
+"""

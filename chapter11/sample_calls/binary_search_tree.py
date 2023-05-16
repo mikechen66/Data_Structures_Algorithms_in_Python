@@ -309,3 +309,18 @@ class TreeMap(LinkedBinaryTree, MapBase):
             self._rotate(x)                               # double rotation (of x)     
             self._rotate(x)
             return x                                      # x is new subtree root
+
+
+if __name__ == '__main__':
+    t = TreeMap()
+    root = t._add_root('a')
+    b = t._add_left(root,'b')
+    c = t._add_right(root,'c')
+    print(list(map(t.Position.element,[root,b,c])),root==t.parent(b))
+
+
+# Output:
+
+"""
+['a', 'b', 'c'] True
+"""
