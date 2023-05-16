@@ -93,3 +93,18 @@ class RedBlackTreeMap(TreeMap):
                 self._fix_deficit(z, self.left(z))
             else:
                 self._fix_deficit(z, self.right(z))
+
+
+if __name__ == '__main__':
+    t = RedBlackTreeMap()
+    root = t._add_root('a')
+    b = t._add_left(root,'b')
+    c = t._add_right(root,'c')
+    print(list(map(t.Position.element,[root,b,c])),root==t.parent(b))
+
+
+# Output:
+
+"""
+['a', 'b', 'c'] True
+"""
