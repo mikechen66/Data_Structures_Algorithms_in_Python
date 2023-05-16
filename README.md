@@ -19,4 +19,4 @@ All of offerings provide a holistic understanding of Python Algorithms.
 ## Notes 
 
 Thanks for all the contributions provided by the authors Michael T. Goodrich, Roberto Tamassia, MIchael H. 
-Goldwasser and the people in the Github and web. 
+Goldwasser and the people in the Github and the web at large. 
