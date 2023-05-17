@@ -88,6 +88,21 @@ if __name__ == '__main__':
     aq.dequeue()
     aq.dequeue()
 
+
+# Output:
+
+
+"""
+5
+3
+2
+8
+9
+1
+7
+6
+
+"""
 #------------------------------------------------------------------------------------------------------------
 
 
@@ -101,47 +116,47 @@ class Empty(Exception):
 class ArrayQueue:
     CAPACITY = 10
     def __init__(self):
-        self._data = [None] * self.CAPACITY                  # 数组数据容量(总存储能力)
-        self._size = 0                                       # 当前数组大小                                  
-        self._front = 0                                      # self._front为当前数据的第一个索引
+        self._data = [None] * self.CAPACITY                  # Array capacity for all data
+        self._size = 0                                       # Current array size                                 
+        self._front = 0                                      # self._front is the 1st index of current data
     def __len__(self):
-        return self._size                                    # 返回当前数据长度
+        return self._size                                    # return the length of current data
     def is_empty(self):
         return self._size == 0
-    def show_first(self):                                    # 定义当前第一个索引的元素
-        if self.is_empty():                                  # 若为空，则提出Queue is empty
+    def show_first(self):                                    # Define the element of  1st index
+        if self.is_empty():                                  # Raise Queue is empty if empty
             raise Empty("Queue is empty")
         else:     
-            return self._data[self._front]                   # 若不为空，返回当前队列第一个索引的元素
-    def dequeue(self):                                       # dequeue()为出队函数
+            return self._data[self._front]                   # Return the element as 1st index if not empty
+    def dequeue(self):                                       
         if self.is_empty():                  
             raise Empty("Queue is empty")
-        showdata = self._data[self._front]                   # 在删除对象的引用之前，显示当前第1个索引值的元素
-        self._data[self._front] = None                       # 把None赋值为上述第一索引值的元素，回收未使用空间
-        self._front = (self._front + 1) % len(self._data)    # 模运算更新索引，把此前第2个元素变成第1个元素
-        self._size -= 1                                      # self._size自减一
-        if 0 < self._size < len(self._data) // 4:            # 在当前数据大小下降为数据容量的1/4时
-            self._resize(len(self._data) // 2)               # 数据容量减半
+        showdata = self._data[self._front]                   # Show the element as 1st index before deleting object reference
+        self._data[self._front] = None                       # Collect non-use space after assign None to the element of array 
+        self._front = (self._front + 1) % len(self._data)    # Change the 2nd element to 1st element with updating index with modulo operator
+        self._size -= 1
+        if 0 < self._size < len(self._data) // 4:            # if current data size decrease 1/4 of the current size
+            self._resize(len(self._data) // 2)               # decrease 1/2 data size
         # print(showdata)
-        return showdata                                      # 返回showdata
-    def enqueue(self, element):                              # enqueue()为入队函数
-        if self._size == len(self._data):                    # 若当前数据大小等于数据容量的长度
-            self._resize(2 * len(self._data))                # 数据容量倍增
-        avail = (self._front + self._size) % len(self._data) # 下一个要插入的位置(即索引)
-        # print(avail)                                       # 打印9个数，
-        self._data[avail] = element                          # 把element赋值给下一个要插入的位置
-        self._size += 1                                      # 当前数据大小自增1
+        return showdata
+    def enqueue(self, element):
+        if self._size == len(self._data):                    # if current size is equal to the length of data 
+            self._resize(2 * len(self._data))                # double data size
+        avail = (self._front + self._size) % len(self._data) # The next position(index) which a next element will be inserted
+        # print(avail)                                       
+        self._data[avail] = element                          # Assign element to the next index to be inserted
+        self._size += 1
     def _resize(self, cap):                                  # cap >= len(self)
-        current = self._data                                 # 跟踪当前列表
+        current = self._data                                 # Track the current list
         # print(current)
-        self._data = [None] * cap                            # 对应上述构造函数中的[None]*CAPACITY
-        walk = self._front                                   # 把前队列中的第1个索引赋值为walk索引
+        self._data = [None] * cap
+        walk = self._front                                   # Assign the 1st inex of queue to the index of walk
         # print(walk)
-        for i in range(self._size):                          # 遍历当前数组
-            self._data[i] = current[walk]                    # 把当前数组下标求出的值赋给self._data[i]
-            walk = (1 + walk) % len(current)                 # 模运算: 求出新的walk索引
+        for i in range(self._size):                          # Traverse the current array
+            self._data[i] = current[walk]                    # Assign the gotten value to self._data[i]
+            walk = (1 + walk) % len(current)                 # modulo operation: get the new index of walk
             # print(walk)
-        self._front = 0                                      # 把0赋值给self._front
+        self._front = 0
 
 
 if __name__ == '__main__':
