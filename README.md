@@ -5,8 +5,8 @@ Make the comprehenisve arrganements including original smaples, sample calls and
 ## Sample Calls 
 
 Since the textbook only includes incomplete sample applications, readers are hard to find how to call them. 
-So I provide the sample calls that include complete callers for easy understanding of the data structure and
-algorithms. 
+So I provide the comprehensive sample calls that include complete callers for easy understanding of the data 
+structure and algorithms in Python. 
 
 ## Solutions
 
