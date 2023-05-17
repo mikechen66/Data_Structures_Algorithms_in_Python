@@ -3,6 +3,11 @@
 # linked_queue.py
 
 
+# Add return e within the function body of enqueue(self,e). Without the 
+# return statment, it can not return any value.
+
+
+
 class Empty(Exception):
     pass
 
@@ -58,3 +63,24 @@ class LinkedQueue:
             self._tail._next = newest
         self._tail = newest                     # update reference to tail node
         self._size += 1
+        return e
+
+
+if __name__ == '__main__':
+    q = LinkedQueue()
+    q.enqueue(5)
+    q.enqueue(4)
+    q.enqueue(3)
+    q.enqueue(2)
+    q.enqueue(1)
+
+
+# Output:
+
+"""
+5
+4
+3
+2
+1
+"""
