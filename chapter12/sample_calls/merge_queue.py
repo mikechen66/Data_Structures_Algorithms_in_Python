@@ -37,22 +37,3 @@ def merge_sort(S):
     # merge results
     merge(S1, S2, S)                    # merge sorted halves back into S
     return S
-
-
-
-if __name__ == '__main__':
-    S = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-    T = merge_sort(S)
-    print(T)
-
-
-# Output:
-
-
-"""
->>> merge_sort(S)
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-  File "<stdin>", line 10, in merge_sort
-AttributeError: 'list' object has no attribute 'dequeue'
-"""
