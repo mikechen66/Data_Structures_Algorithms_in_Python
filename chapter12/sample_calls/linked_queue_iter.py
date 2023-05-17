@@ -65,9 +65,10 @@ class LinkedQueue:
         self._size += 1
 
 
-
-if __name__ == '__main__':
+def main():
     q = LinkedQueue()
+    q.enqueue(7)
+    q.enqueue(6)
     q.enqueue(5)
     q.enqueue(4)
     q.enqueue(3)
@@ -75,13 +76,16 @@ if __name__ == '__main__':
     q.enqueue(1)
     [i for i in q]
     q.dequeue()
-    [i for i in q]
+    return [i for i in q]
+
+
+if __name__ == '__main__':
+    main()
 
 
 # Output:
 
+
 """
-[5, 4, 3, 2, 1]
-5
-[4, 3, 2, 1]
+[6, 5, 4, 3, 2, 1]
 """

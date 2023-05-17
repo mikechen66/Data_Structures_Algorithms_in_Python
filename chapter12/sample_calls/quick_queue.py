@@ -2,8 +2,20 @@
 
 # quick_queue.py
 
+"""
 
-from linked_queue import LinkedQueue
+It does not work since 'list' object has no attribute (methods) in LinkedQueue
+The following snippets can not get the data. 
+
+data = []
+for i in lq:
+    data.append(i)
+# merge_sort(data)
+
+"""
+
+
+from linked_queue_iter import LinkedQueue
 
 
 def quick_sort(S):
@@ -33,3 +45,23 @@ def quick_sort(S):
         S.enqueue(E.dequeue())
     while not G.is_empty():
         S.enqueue(G.dequeue())
+
+
+if __name__ == '__main__':
+    lq = LinkedQueue()
+    lq.enqueue(6)
+    lq.enqueue(3)
+    lq.enqueue(1)
+    lq.enqueue(4)
+    lq.enqueue(2)
+    [i for i in lq]
+    # It does not work since 'list' object has no attribute (methods) in LinkedQueue
+    quick_sort(lq)
+
+
+
+# Output:
+
+"""
+[6, 3, 1, 4, 2]
+"""

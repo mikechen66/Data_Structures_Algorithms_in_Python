@@ -3,7 +3,20 @@
 # merge_queue.py
 
 
-from linked_queue import LinkedQueue
+"""
+
+It does not work since 'list' object has no attribute (methods) in LinkedQueue
+The following snippets can not get the data. 
+
+data = []
+for i in lq:
+    data.append(i)
+merge_sort(data)
+
+"""
+
+
+from linked_queue_iter import LinkedQueue
 
 
 def merge(S1, S2, S):
@@ -36,4 +49,22 @@ def merge_sort(S):
     merge_sort(S2)                      # sort second half
     # merge results
     merge(S1, S2, S)                    # merge sorted halves back into S
-    return S
+
+
+if __name__ == '__main__':
+    lq = LinkedQueue()
+    lq.enqueue(6)
+    lq.enqueue(3)
+    lq.enqueue(1)
+    lq.enqueue(4)
+    lq.enqueue(2)
+    [i for i in lq]
+    # It does not work since 'list' object has no attribute (methods) in LinkedQueue
+    merge_sort(lq)
+
+
+# Output:
+
+"""
+[6, 3, 1, 4, 2]
+"""

@@ -21,3 +21,10 @@ def quick_select(S, k):
     else:
         j = k - len(L) - len(E)          # new selection parameter
         return quick_select(G, j)        # kth smallest is jth in G
+
+
+if __name__ == "__main__":
+    S = [3, 6, 1, 2, 4, 6, 7]
+    k = 5
+    # quick_select(S, k) == 6
+    quick_select(S, k)
