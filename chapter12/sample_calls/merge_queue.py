@@ -3,68 +3,63 @@
 # merge_queue.py
 
 
-"""
-
-It does not work since 'list' object has no attribute (methods) in LinkedQueue
-The following snippets can not get the data. 
-
-data = []
-for i in lq:
-    data.append(i)
-merge_sort(data)
-
-"""
+# Please note the original text has no return within the function decorated_merge_sort().
+# If no return, it will None after calling. Here add 'return S' in order to return sorted 
+# list. 
 
 
 from linked_queue_iter import LinkedQueue
 
 
 def merge(S1, S2, S):
-    # Merge two sorted queue instances S1 and S2 into empty queue S.
-    while not S1.is_empty() and not S2.is_empty():
-        if S1.first() < S2.first():
-            S.enqueue(S1.dequeue())
+    # Merge two sorted Python lists S1 and S2 into properly sized list S.
+    i = j = 0
+    while i + j < len(S):
+        if j == len(S2) or (i < len(S1) and S1[i] < S2[j]):
+            S[i+j] = S1[i]      # copy ith element of S1 as next item of S
+            i += 1
         else:
-            S.enqueue(S2.dequeue())
-    while not S1.is_empty():            # move remaining elements of S1 to S
-        S.enqueue(S1.dequeue())
-    while not S2.is_empty():            # move remaining elements of S2 to S
-        S.enqueue(S2.dequeue())
+            S[i+j] = S2[j]      # copy jth element of S2 as next item of S
+            j += 1
 
 
 def merge_sort(S):
-    # Sort the elements of queue S using the merge-sort algorithm.
+    # Sort the elements of Python list S using the merge-sort algorithm.
     n = len(S)
     if n < 2:
-        return                          # list is already sorted
+        return                  # list is already sorted
     # divide
-    S1 = LinkedQueue()                  # or any other queue implementation
-    S2 = LinkedQueue()
-    while len(S1) < n // 2:             # move the first n//2 elements to S1
-        S1.enqueue(S.dequeue())
-    while not S.is_empty():             # move the rest to S2
-        S2.enqueue(S.dequeue())
+    mid = n // 2
+    S1 = S[0:mid]               # copy of first half
+    S2 = S[mid:n]               # copy of second half
     # conquer (with recursion)
-    merge_sort(S1)                      # sort first half
-    merge_sort(S2)                      # sort second half
+    merge_sort(S1)              # sort copy of first half
+    merge_sort(S2)              # sort copy of second half
     # merge results
-    merge(S1, S2, S)                    # merge sorted halves back into S
+    merge(S1, S2, S)            # merge sorted halves back into S
+    return S
+
 
 
 if __name__ == '__main__':
     lq = LinkedQueue()
+    lq.enqueue(7)
     lq.enqueue(6)
-    lq.enqueue(3)
-    lq.enqueue(1)
+    lq.enqueue(5)
     lq.enqueue(4)
+    lq.enqueue(3)
     lq.enqueue(2)
-    [i for i in lq]
-    # It does not work since 'list' object has no attribute (methods) in LinkedQueue
-    merge_sort(lq)
+    lq.enqueue(1)
+    lq.dequeue()
+    res = [i for i in lq]
+    print(res)
+    merge_sort(res)
 
 
 # Output:
 
 """
-[6, 3, 1, 4, 2]
+7
+[6, 5, 4, 3, 2, 1]
+[1, 2, 3, 4, 5, 6]
 """
