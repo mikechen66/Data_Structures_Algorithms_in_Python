@@ -1,44 +1,28 @@
 
 
-# quick_queue.py
+# quick_queue_pivot.py
 
 
 from linked_queue_iter import LinkedQueue
 
 
-# Function to find the partition position
-
-def partition(array, low, high):
-    # Choose the rightmost element as pivot
-    pivot = array[high]
-    # Pointer for greater element
-    i = low - 1
-    # Traverse through all elements
-    # compare each element with pivot
-    for j in range(low, high):
-        if array[j] <= pivot:
-            # If element smaller than pivot is found
-            # swap it with the greater element pointed by i
-            i = i + 1
-            # Swapping element at i with element at j
-            (array[i], array[j]) = (array[j], array[i])
-    # Swap the pivot element with
-    # e greater element specified by i
-    (array[i + 1], array[high]) = (array[high], array[i + 1])
-    # Return the position from where partition is done
-    return i + 1
-
-
-def quick_sort(array, low, high):
-    if low < high:
-        # Find pivot element such that
-        # element smaller than pivot are on the left
-        # element greater than pivot are on the right
-        pi = partition(array, low, high)
-        # Recursive call on the left of pivot
-        quick_sort(array, low, pi - 1)
-        # Recursive call on the right of pivot
-        quick_sort(array, pi + 1, high)
+def quick_sort(arr, i, j):
+    if i >= j:
+        return arr
+    pivot = arr[i]
+    low = i
+    high = j
+    while i < j:
+        while i < j and arr[j] >= pivot:
+            j -=1
+        arr[i] = arr[j]
+        while i < j and arr[i] <= pivot:
+            i += 1
+        arr[j] = arr[i]
+    arr[i] = pivot
+    quick_sort(arr, low, i-1)
+    quick_sort(arr, i+1, high)
+    return arr
 
 
 if __name__ == '__main__':
@@ -51,15 +35,16 @@ if __name__ == '__main__':
     lq.enqueue(2)
     lq.enqueue(1)
     lq.dequeue()
-    res = [i for i in lq]
-    print(res)
-    quick_sort(res, 0, len(res)-1)
-    print(res)
+    res1 = [i for i in lq]
+    print(res1)
+    res2 = quick_sort(res1, 0, len(res1)-1)
+    print(res2)
+
 
 # Output:
 
-"""
-7
+ """
+ 7
 [6, 5, 4, 3, 2, 1]
 [1, 2, 3, 4, 5, 6]
-"""
+ """
