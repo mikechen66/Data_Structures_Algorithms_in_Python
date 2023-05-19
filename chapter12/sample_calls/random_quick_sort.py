@@ -1,7 +1,10 @@
 
 
-# quick_inplace.py
+# random_quick_sort.py
 
+"""
+
+1. Origial quick_inplace.py
 
 def inplace_quick_sort(S, a, b):
     # Sort the list from S[a] to S[b] inclusive using the quick-sort algorithm.
@@ -35,11 +38,26 @@ if __name__ == '__main__':
     print(T)
 
 
-# Output:
+2. change the original to the random quicksort with the following changes
 
-"""
-[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+1). Add if statment as follows
+
+    if b is None:
+        b = len(S) - 1
+
+    if no if statement, it will generate the error as follows.
+    TypeError: '>=' not supported between instances of 'int' and 'NoneType'
+
+2). Add the pivot assignment and the swap between S[b] and S[ramn_num]
+
+    pivot = S[rand_num]                            # Choose a random number as pivot
+    S[rand_num], S[b] = S[b], S[rand_num]          # Swatch S[randoma] and S[j]
+
+3). Add the following statements
+
+    n = 10
+    S = [random.randint(0, 50) for i in range(n)]
+
 """
 
 
