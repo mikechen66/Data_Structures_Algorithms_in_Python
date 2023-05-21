@@ -28,12 +28,10 @@ def bucketSort(array):
 
 if __name__ == '__main__':
     array = [.42, .32, .33, .52, .37, .47, .51]
-    print("Sorted Array in descending order is")
     print(bucketSort(array))
 
 # Output:
 
 """
-Sorted Array in descending order is
 [0.32, 0.33, 0.37, 0.42, 0.47, 0.51, 0.52]
 """
