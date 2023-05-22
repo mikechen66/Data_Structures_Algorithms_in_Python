@@ -4,7 +4,7 @@
 
 
 def merge(left, right):
-    # 合并两个有序列表
+    # Combine two ordered list
     res = []
     while len(left) > 0 and len(right) > 0:
         if left[0] < right[0]:
