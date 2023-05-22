@@ -1,6 +1,6 @@
 
 
-# mergesort.py
+# merge_sort.py
 
 
 def merge(left, right):
@@ -18,17 +18,17 @@ def merge(left, right):
     return res
 
 
-def mergesort(arr):
+def merge_sort(arr):
     n = len(arr)
     if n < 2:
         return arr
     middle = n // 2
     left = arr[:middle] 
     right = arr[middle:]
-    left_sort = mergesort(left) 
-    right_sort = mergesort(right)
+    left_sort = merge_sort(left) 
+    right_sort = merge_sort(right)
     return merge(left_sort, right_sort)
 
 
 if __name__ == '__main__':
-    mergesort([11, 99, 33 , 69, 77, 88, 55, 11, 33, 36,39, 66, 44, 22])
+    merge_sort([11, 99, 33 , 69, 77, 88, 55, 11, 33, 36,39, 66, 44, 22])
