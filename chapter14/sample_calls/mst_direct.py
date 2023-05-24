@@ -1,17 +1,10 @@
 
 
-# mst.pt
-
+# mst_direct.pt
 
 """
-The mst functions can not call the methods related to the orginal methods under the orginal 
-Graph class in graph.py. 
 
-TypeError: '<' not supported between instances of 'str' and 'float'
-
-However, there is modified Graph class under the scruipt of graph_direct.py. Users can adopt
-mst_direct and mst_simple to call the methods of the modified Graph with the environment of 
-either HeapPriorityQueue or directly simple environment. 
+Call the modified Graph(within graph_show.py) with importing the PriorityQueue-like classes.
 
 """
 
@@ -19,7 +12,7 @@ either HeapPriorityQueue or directly simple environment.
 from heap_priority_queue import HeapPriorityQueue
 from adaptable_heap_priority_queue import AdaptableHeapPriorityQueue
 from partition import Partition
-from graph import Graph
+from graph_direct import Graph
 
 
 def mst_prim_jarnik(g):
@@ -83,23 +76,49 @@ def mst_kruskal(g):
     return tree
 
 
-if __name__ == '__main__':
-    g = Graph(directed=True)
-    v1 = g.insert_vertex(x='v1')
-    v2 = g.insert_vertex(x='v2')
-    v3 = g.insert_vertex(x='v3')
-    v4 = g.insert_vertex(x='v4')
-    v5 = g.insert_vertex(x='v5')
-    e1 = g.insert_edge(v1, v2, x='e1')
-    e2 = g.insert_edge(v1, v3, x='e2')
-    e3 = g.insert_edge(v2, v3, x='e3')
-    e4 = g.insert_edge(v3, v4, x='e4')
-    e5 = g.insert_edge(v3, v5, x='e5')
-    print(g)
+if __name__ == "__main__":
+    g = Graph()
+    v1 = g.insert_vertex('v1')
+    v2 = g.insert_vertex('v2')
+    v3 = g.insert_vertex('v3')
+    v4 = g.insert_vertex('v4')
+    v5 = g.insert_vertex('v5')
+    v6 = g.insert_vertex('v6')
+    v7 = g.insert_vertex('v7')
+    v8 = g.insert_vertex('v8')
+    e1 = g.insert_edge(v1, v2, 4)
+    e2 = g.insert_edge(v1, v5, 5)
+    e3 = g.insert_edge(v4, v5, 7)
+    e4 = g.insert_edge(v4, v6, 6)
+    e5 = g.insert_edge(v2, v5, 5)
+    e6 = g.insert_edge(v5, v6, 4)
+    e7 = g.insert_edge(v2, v3, 2)
+    e8 = g.insert_edge(v3, v7, 2)
+    e9 = g.insert_edge(v6, v7, 6)
+    e10 = g.insert_edge(v7, v8, 3)
+    e11 = g.insert_edge(v6, v8, 7)
+    e12 = g.insert_edge(v2, v8, 8)
+    e13 = g.insert_edge(v5, v7, 1)
+    tree = mst_prim_jarnik(g)
+    print(tree)
+    tree = mst_kruskal(g)
+    print(tree)
+    assert set(tree) == {e13, e8, e7, e10, e6, e1, e4}
 
 
 # Output:
 
 """
-<graph.Graph object at 0x7f8e1c667550>
+# mst_prim_jarnik() method
+
+[Edge[Vertex[v2] ->[2] Vertex[v3]], Edge[Vertex[v3] ->[2] Vertex[v7]], Edge[Vertex[v5] ->[1] Vertex[v7]], 
+ Edge[Vertex[v7] ->[3] Vertex[v8]], Edge[Vertex[v5] ->[4] Vertex[v6]], Edge[Vertex[v1] ->[4] Vertex[v2]], 
+ Edge[Vertex[v4] ->[6] Vertex[v6]]]
+
+
+# mst_kruskal() method 
+[Edge[Vertex[v5] ->[1] Vertex[v7]], Edge[Vertex[v3] ->[2] Vertex[v7]], Edge[Vertex[v2] ->[2] Vertex[v3]], 
+ Edge[Vertex[v7] ->[3] Vertex[v8]], Edge[Vertex[v5] ->[4] Vertex[v6]], Edge[Vertex[v1] ->[4] Vertex[v2]], 
+ Edge[Vertex[v4] ->[6] Vertex[v6]]]
+
 """
