@@ -1,6 +1,6 @@
 
 
-# dfs.py
+# dfs_call.py
 
 
 from graph import Graph
@@ -17,7 +17,8 @@ def dfs(g, u, discovered):
         v = e.opposite(u)
         if v not in discovered:         # v is an unvisited vertex
             discovered[v] = e           # e is the tree edge that discovered v
-            DFS(g, v, discovered)       # recursively explore from v
+            dfs(g, v, discovered)       # recursively explore from v
+    return g
 
 
 def construct_path(u, v, discovered):
@@ -50,5 +51,45 @@ def dfs_complete(g):
     for u in g.vertices():
         if u not in forest:
             forest[u] = None            # u will be the root of a tree
-            DFS(g, u, forest)
+            dfs(g, u, forest)
     return forest
+
+
+if __name__ == "__main__":
+    g = Graph(directed=True)
+    v1 = g.insert_vertex(x='v1')
+    v2 = g.insert_vertex(x='v2')
+    v3 = g.insert_vertex(x='v3')
+    v4 = g.insert_vertex(x='v4')
+    v5 = g.insert_vertex(x='v5')
+    e1 = g.insert_edge(v1, v2, x='e1')
+    e2 = g.insert_edge(v1, v3, x='e2')
+    e3 = g.insert_edge(v2, v3, x='e3')
+    e4 = g.insert_edge(v3, v4, x='e4')
+    e5 = g.insert_edge(v3, v5, x='e5')
+    discovered = {v1: None}
+    dfs(g, v1, discovered)
+    assert len(discovered) == 5
+    cp = construct_path(v1, v5, discovered)
+    print(cp)
+    dc = dfs_complete(g)
+    print(dc)
+
+
+# Output:
+
+"""
+# dfs(g, v1, discovered)
+<graph.Graph object at 0x7fd288862e10>
+
+# print(cp)
+[<graph.Graph.Vertex object at 0x7fd288862e50>, <graph.Graph.Vertex object at 0x7fd288862e90>, 
+<graph.Graph.Vertex object at 0x7fd288862ed0>, <graph.Graph.Vertex object at 0x7fd288862f50>]
+
+# print(dc)
+{<graph.Graph.Vertex object at 0x7fd288862e50>: None, 
+ <graph.Graph.Vertex object at 0x7fd288862e90>: <graph.Graph.Edge object at 0x7fd288869eb0>,
+ <graph.Graph.Vertex object at 0x7fd288862ed0>: <graph.Graph.Edge object at 0x7fd28886b870>, 
+ <graph.Graph.Vertex object at 0x7fd288862f10>: <graph.Graph.Edge object at 0x7fd28886b8c0>, 
+ <graph.Graph.Vertex object at 0x7fd288862f50>: <graph.Graph.Edge object at 0x7fd28886b910>}
+"""
