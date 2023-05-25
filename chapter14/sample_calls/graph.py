@@ -63,7 +63,7 @@ class Graph:
         if directed:
             self._incoming = {}
         else:
-            self._outgoing
+            selg._incoming = self._outgoing
         """
     def _validate_vertex(self, v):
         # Verify that v is a Vertex of this graph.
