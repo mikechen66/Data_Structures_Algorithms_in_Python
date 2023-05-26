@@ -6,9 +6,22 @@
 
 The script is quick abstract because it has a call on the methods of Graph class and chained 
 call on the methods of the methods of PriorityQueue-like classes. Therefore, it is hard to 
-present a concrete test on the script. There is a related script named dijkstra_queue.py that 
-can help readers understand what happens with adoption of Queue data structure. Please take 
-the scriupt for reference in the same folder. 
+present a concrete test on the script. 
+
+
+Due to half instantiation of the original graph.py, user only get the Hexadecimal address as 
+conducting "from graph import Graph"
+
+{<graph.Graph.Vertex object at 0x7f62d2c6a210>: 0, <graph.Graph.Vertex object at 0x7f62d2c6a250>: 
+3, <graph.Graph.Vertex object at 0x7f62d2c6a290>: 5, <graph.Graph.Vertex object at 0x7f62d2c6a310>: 
+8, <graph.Graph.Vertex object at 0x7f62d2c6a2d0>: inf}
+
+Therefore, we use the modified "from graph_direct import graph" to enable human-readable 
+output such as "Vertex[v1]: 0"。
+
+There is a related script named dijkstra_queue.py that can help readers understand what happens 
+with adoption of Queue data structure. Please take the scriupt for reference in the same folder. 
+
 """
 
 
