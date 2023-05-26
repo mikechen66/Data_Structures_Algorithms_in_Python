@@ -1,8 +1,18 @@
 
 
-# shortest_path.py
+# shortest_paths.py
+
+"""
+
+The script is quick abstract because it has a call on the methods of Graph class and chained 
+call on the methods of the methods of PriorityQueue-like classes. Therefore, it is hard to 
+present a concrete test on the script. There is a related script named dijkstra_queue.py that 
+can help readers understand what happens with adoption of Queue data structure. Please take 
+the scriupt for reference in the same folder. 
+"""
 
 
+from graph_direct import Graph
 from adaptable_heap_priority_queue import AdaptableHeapPriorityQueue
 
 
@@ -39,6 +49,7 @@ def shortest_path_lengths(g, src):
                     pq.update(pqlocator[v], d[v], v)    # update the pq entry
     return cloud                                  # only includes reachable vertices
 
+
 def shortest_path_tree(g, s, d):
     """
     Reconstruct shortest-path tree rooted at vertex s, given distance map d.
@@ -54,3 +65,27 @@ def shortest_path_tree(g, s, d):
                 if d[v] == d[u] + wgt:
                     tree[v] = e                        # edge e is used to reach v
     return tree
+
+
+if __name__ == "__main__":
+    g = Graph(directed=True)
+    v1 = g.insert_vertex('v1')
+    v2 = g.insert_vertex('v2')
+    v3 = g.insert_vertex('v3')
+    v4 = g.insert_vertex('v4')
+    v5 = g.insert_vertex('v5')
+    e1 = g.insert_edge(v1, v2, 3)
+    e2 = g.insert_edge(v2, v3, 2)
+    e3 = g.insert_edge(v4, v2, 6)
+    e4 = g.insert_edge(v3, v5, 7)
+    e5 = g.insert_edge(v2, v5, 5)
+    e6 = g.insert_edge(v4, v5, 6)
+    path = shortest_path_lengths(g, v1)
+    print(path)
+
+
+# Output:
+
+"""
+{Vertex[v1]: 0, Vertex[v2]: 3, Vertex[v3]: 5, Vertex[v5]: 8, Vertex[v4]: inf}
+"""
