@@ -67,7 +67,7 @@ def dijkstra(g, src):
     """
     d = {}                                        # d[v] is upper bound from s to v
     cloud = {}                                    # map reachable v to its d[v] value
-    h = []                                        # h is a heapq-type list 
+    h = []                                        # h is a heapq-type list(FIFO queue) 
     i = 0                                         # initialize autoincr index i as 0
     # for each vertex v of the graph, add an entry to the heapq, with the source having 
     # distance 0 and any others having infinite distance
@@ -86,10 +86,10 @@ def dijkstra(g, src):
             if u not in cloud:
                 entry = next((e for e in h if e[2]==u), None)
                 # perform relaxation step on edge (u,v)
-                wgt = e.element()                 # wgt = 
+                wgt = e.element()                 # wgt = w(u,v) = w(e) 
                 if d[v] + wgt < d[u]:
                     d[u] = d[v] + wgt             # update the distance
-                    del h[h.index(entry)]
+                    del h[h.index(entry)]         # index(entry) get lsit h's index
                     heappush(h, (d[u], entry[1], u))
     return cloud                                  # only includes reachable vertices
 
