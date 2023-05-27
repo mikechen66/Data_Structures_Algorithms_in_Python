@@ -24,7 +24,6 @@ negative).
 The origianl "from graph_direct import Graph" can be worked only in the condition of 
 adding remove_edge() method that is shown in the script of graph_direct.py
 
-
 Due to the chained call on Graph and HeapPriorityQueue classes, the realization of the
 algorithm in the textbook is more complex than a stand-alone Floyd-Warshall algorithm. 
 """
