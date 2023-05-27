@@ -1,6 +1,35 @@
 
 
-# dfs_call.py
+# dfs.py
+
+"""
+A graph is a way of representing relationships that exist between pairs of objects. A graph 
+is a set of objects, called vertices, together with a collection of pairwise connections 
+between them, called edges. 
+
+Edges in a graph are either directed or undirected. An edge (u, v) is said tobe directed 
+from u to v if the pair (u, v) is ordered, with u preceding v. An edge (u, v) is said to be 
+undirected if the pair (u, v) is not ordered. The two vertices joined by an edge are called 
+the end vertices (or endpoints) of the edge.
+
+If an edge is directed, its first endpoint is its origin and the other is the destination of 
+the edge. Two vertices u and v are said to be adjacent if there is an edge whose end vertices 
+are u and v.
+
+The outgoing edges of a vertex are the directed edges whose origin is the vertex. The incoming 
+edges of a vertex are the directed edges whose destination is the vertex. The degree of a 
+vertex v, denoted deg(v), is the number of incident edges of v. The in-degree and out-degree 
+of a vertex v are the number of the incoming and outgoing edges of v, and are denoted indeg(v) 
+and outdeg(v), respectively.
+
+The definition of a graph refers to the group of edges as a collection, not a set, thus allowing 
+two undirected edges to have the same end vertices, and for two directed edges to have the same 
+origin and the same destination. 
+
+With few exceptions, graphs do not have parallel edges or self-loops. Such graphs are said to 
+be simple. Thus, we can usually say that the edges of a simple graph are a set of vertex pairs 
+(and not just a collection). Representation of a simple graph uses an adjacency map.
+"""
 
 
 from graph import Graph
@@ -14,7 +43,7 @@ def dfs(g, u, discovered):
     Newly discovered vertices will be added to the dictionary as a result.
     """
     for e in g.incident_edges(u):       # for every outgoing edge from u
-        v = e.opposite(u)
+        v = e.opposite(u)               # v is the opposite of u along the edge 
         if v not in discovered:         # v is an unvisited vertex
             discovered[v] = e           # e is the tree edge that discovered v
             dfs(g, v, discovered)       # recursively explore from v
