@@ -1,66 +1,103 @@
 
 
-# topological_sort_print.py
+# topological_sort_dfs.py
 
 
 """
-Topological sorting for Directed Acyclic Graph (DAG) is a linear ordering of vertices 
-such that for every directed edge u v, vertex u comes before v in the ordering.
+
+A Topological sort or Topological ordering of a directed graph is a linear ordering 
+of its vertices such that for every directed edge uv from vertex u to vertex v, u 
+comes before v in the ordering. A topological ordering is possible if and only if 
+the graph has no directed cycles, i.e. if the graph is DAG.
+
+We can use Depth–first search (DFS) to implement topological sort algorithm. The idea 
+is to order the vertices in order of their decreasing departure time of vertices in 
+DFS, and we will get our desired topological sort.
+
+Following is the relationship we have seen between the departure time for different 
+types of edges involved in a DFS of the directed graph:
+
+Tree edge (u, v):    departure[u] > departure[v]
+Back edge (u, v):    departure[u] < departure[v]
+Forward edge (u, v): departure[u] > departure[v]
+Cross edge (u, v):   departure[u] > departure[v]
+
+With regard to a tree edge, forward edge, or cross edge (u, v), departure[u] is more 
+than departure[v]. But only for the back edge, relationship departure[u] < departure[v] 
+is true. So, it is guaranteed that if an edge (u, v) has departure[u] > departure[v], 
+it’s not a back-edge.
+
+DAG, no back-edge is present. So if we order the vertices in order of their decreasing 
+departure time, we will get the topological order of the graph (every edge going from 
+left to right).
 """
 
 
-from collections import defaultdict
-
-
-# Class to represent a graph
+# A class to represent a graph object
 class Graph:
-    def __init__(self, vertices):
-        self.graph = defaultdict(list)   # dictionary containing adjacency List
-        self.V = vertices                # Numberof vertices
-    # function to add an edge to graph
-    def add_edge(self, u, v):
-        self.graph[u].append(v)
-    # A recursive function used by topologicalSort
-    def util(self, v, visited, stack):
-        # Mark the current node as visited.
-        visited[v] = True
-        # Recur for all the vertices adjacent to this vertex
-        for i in self.graph[v]:
-            if visited[i] == False:
-                self.util(i, visited, stack)
-        # Push current vertex to stack which stores result
-        stack.append(v)
-    # The function to do Topological Sort. It uses recursive
-    # topologicalSortUtil()
-    def topological_sort(self):
-        # Mark all the vertices as not visited
-        visited = [False]*self.V
-        stack = []
-        # Call the recursive helper function to store Topological
-        # Sort starting from all vertices one by one
-        for i in range(self.V):
-            if visited[i] == False:
-                self.util(i, visited, stack)
-        # Print contents of the stack
-        print(stack[::-1]) # return list in reverse order
+    def __init__(self, edges, n):
+        # A list of lists to represent an adjacency list
+        self.adj_list = [[] for _ in range(n)]
+        # add edges to the directed graph
+        for (src, dest) in edges:
+            # add an edge from source to destination
+            self.adj_list[src].append(dest)
+
+
+# Perform DFS on the graph and set the departure time of all
+# vertices of the graph
+def dfs(graph, v, discovered, departure, time):
+    # mark the current node as discovered
+    discovered[v] = True
+    # set the arrival time of vertex `v`
+    time = time + 1
+    # do for every edge (v, u)
+    for u in graph.adj_list[v]:
+        # if `u` is not yet discovered
+        if not discovered[u]:
+            time = dfs(graph, u, discovered, departure, time)
+    # ready to backtrack
+    # set departure time of vertex `v`
+    departure[time] = v
+    time = time + 1
+    return time
+
+
+# Function to perform a topological sort on a given DAG
+def topological_sort(graph, n):
+    # departure[] stores the vertex number using departure time as an index
+    departure = [-1] * 2 * n
+    ''' If we had done it the other way around, i.e., fill the array
+        with departure time using vertex number as an index, we would
+        need to sort it later '''
+    # to keep track of whether a vertex is discovered or not
+    discovered = [False] * n
+    time = 0
+    # perform DFS on all undiscovered vertices
+    for i in range(n):
+        if not discovered[i]:
+            time = dfs(graph, i, discovered, departure, time)
+    # Print the vertices in order of their decreasing
+    # departure time in DFS, i.e., in topological order
+    for i in reversed(range(2*n)):
+        if departure[i] != -1:
+            print(departure[i], end=' ')
 
 
 if __name__ == '__main__':
-    g = Graph(6)
-    g.add_edge(5, 2)
-    g.add_edge(5, 0)
-    g.add_edge(4, 0)
-    g.add_edge(4, 1)
-    g.add_edge(2, 3)
-    g.add_edge(3, 1)
-    print("Here give a Topological Sort of the given graph")
-    g.topological_sort()
+    # List of graph edges as per the above diagram
+    edges = [(0, 6), (1, 2), (1, 4), (1, 6), (3, 0), (3, 4), (5, 1), (7, 0), (7, 1)]
+    # total number of nodes in the graph (labelled from 0 to 7)
+    n = 8
+    # build a graph from the given edges
+    graph = Graph(edges, n)
+    # perform topological sort
+    topological_sort(graph, n)
+    print()
+ 
 
-
-# Output:
+ # Output:
 
 """
-Here give a Topological Sort of the given graph
-[5, 4, 2, 3, 1, 0]
-
+7 5 3 1 4 2 0 6 
 """
