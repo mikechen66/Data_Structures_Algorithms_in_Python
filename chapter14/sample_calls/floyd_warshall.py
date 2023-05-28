@@ -5,11 +5,12 @@
 
 """
 Floyd-Warshall Algorithm is an algorithm for finding the shortest path between all the 
-pairs of vertices in a weighted graph. Please see the simple idea for the algorithm
-as follows. 
+pairs of vertices in a weighted graph. It is widely used while the graph is featured 
+with the traits of m >> n and dense or sparse matrix. used Please see the simple idea
+for the algorithm as follows. 
 
-Let k be the intermediate vertex in the shortest path from source to destination. In this 
-step, k is the first vertex. 
+Let k be the intermediate vertex in the shortest path from source to destination, k is 
+the first vertex in the step. 
 
 if 
 (A[i][j] > A[i][k] + A[k][j]).
