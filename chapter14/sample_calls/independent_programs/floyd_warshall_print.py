@@ -22,7 +22,7 @@ Add all vertices one by one to the set of intermediate vertices.
      vertices such that the shortest distances consider only the vertices in the 
      set {0, 1, 2, .. k-1} as intermediate vertices.
 ---> After the end of a iteration, vertex no. k is added to the set of intermediate 
-      vertices and the set becomes {0, 1, 2, ... k}
+     vertices and the set becomes {0, 1, 2, ... k}
 """
 
 
