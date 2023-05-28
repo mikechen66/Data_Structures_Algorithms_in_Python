@@ -1,6 +1,6 @@
 
 
-# shortest_paths.py
+# dijkstra.py
 
 """
 We intend to apply the greedy method to the single-source, shortest-path problem, results 
