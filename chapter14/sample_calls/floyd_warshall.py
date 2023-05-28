@@ -35,6 +35,8 @@ adding remove_edge() method that is shown in the script of graph_direct.py
 
 Due to the chained call on Graph and HeapPriorityQueue classes, the realization of the
 algorithm in the textbook is more complex than a stand-alone Floyd-Warshall algorithm. 
+However, it provides a function call perspective that enable understading of the major
+standard library modules. 
 """
 
 
