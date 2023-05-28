@@ -20,7 +20,7 @@ and pull u into C. In general, we will use a heapq to select among  the vertices
 Cloud dict.
 
 In the very first iteration, we will pull s into C. Once a new vertex u is pulled into C, 
-we then update the label D[v] of each vertex v that is adjacent to u  and is outside of C, 
+we then update the label D[v] of each vertex v that is adjacent to u and is outside of C, 
 to reflect the fact that there may be a new and better way to get to v via u. This update 
 operation is known as relaxation, for it takes an old estimate and checks if it can be 
 improved to get closer to its true value. The specific edge relaxation operation is described 
@@ -34,6 +34,9 @@ where
 w(u,v) = w(e) = wgt 
 
 2. heapq module
+
+The module provides the heap queue algorithm, also known as the priority queue algorithm.
+Priority queue is usually in shortened as pq. 
 
 1). Functions 
 heapq.heappush(heap, item):
