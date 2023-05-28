@@ -113,7 +113,7 @@ def dijkstra(g, src):
         for e in g.incident_edges(v):             # e is edge
             u = e.opposite(v)
             if u not in cloud:
-                # Typical entry is usually [priority, count, task].
+                # Typical entry is usually (priority, count, task).
                 entry = next((e for e in h if e[2]==u), None)  
                 # perform relaxation step on edge (u,v)
                 wgt = e.element()                 # wgt = w(u,v) = w(e) 
