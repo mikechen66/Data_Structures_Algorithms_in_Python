@@ -33,7 +33,27 @@ D[v] = D[u] + w(u, v)
 where 
 w(u,v) = w(e) = wgt 
 
-2. Abstraction
+2. heapq module
+
+1). Functions 
+heapq.heappush(heap, item):
+Push the value item onto the heap, maintaining the heap invariant.
+
+heapq.heappop(heap):
+Pop and return the smallest item from the heap, maintaining the heap invariant. If the heap 
+is empty, IndexError is raised. Please note heappop() can return (priority, count, task). 
+
+2). Examples: 
+
+h = []
+heappush(h, (5, 'write code'))
+heappush(h, (7, 'release product'))
+heappush(h, (1, 'write spec'))
+heappush(h, (3, 'create tests'))
+heappop(h)
+(1, 'write spec')
+
+3. Abstraction
 
 The script example is quite abstract because it has a call on the methods of Graph class and 
 chained call on the methods of the methods of PriorityQueue-like classes. Therefore, it is 
@@ -51,6 +71,9 @@ output such as "Vertex[v1]: 0" in the output list。
 
 There is a related script named dijkstra_queue.py that can help readers understand what happens 
 with adoption of Queue data structure. Please take the scriupt for reference in the same folder. 
+
+# https://github.com/python/cpython/blob/3.11/Lib/heapq.py
+# https://realpython.com/python-heapq-module/
 """
 
 
@@ -60,15 +83,14 @@ from heapq import heapify, heappop, heappush
 
 def dijkstra(g, src):
     """
-    It compute shortest-path distances from src(source) to reachable vertices of g.
-    Graph g can be undirected or directed, but must be weighted such that e.element() 
-    returns a numeric weight for each edge e.
-    Return dictionary mapping each reachable vertex to its distance from src.
+    It compute shortest-path distances from src(source) to reachable vertices of g. Graph g can be 
+    undirected or directed, but must be weighted such that e.element() returns a numeric weight for 
+    each edge e.
     """
     d = {}                                        # d[v] is upper bound from s to v
     cloud = {}                                    # map reachable v to its d[v] value
     h = []                                        # h is a heapq-type list(FIFO queue) 
-    i = 0                                         # initialize autoincr index i as 0
+    i = 0                                         # initialize autoincr counter i as 0
     # for each vertex v of the graph, add an entry to the heapq, with the source having 
     # distance 0 and any others having infinite distance
     for v in g.vertices():
@@ -79,19 +101,21 @@ def dijkstra(g, src):
         h.append((d[v], i, v))                    # add i so v is never compared in radix sort
         i += 1                                    # i automatically increases (replace locator)
     while len(h) > 0:
-        d_w, _, v = heappop(h)
+        d_w, _, v = heappop(h)                    # sample: (priority, count, task) = heappop(pq) 
         cloud[v] = d_w 
         for e in g.incident_edges(v):             # e is edge
             u = e.opposite(v)
             if u not in cloud:
-                entry = next((e for e in h if e[2]==u), None)
+                # Typical entry is usually [priority, count, task].
+                entry = next((e for e in h if e[2]==u), None)  
                 # perform relaxation step on edge (u,v)
                 wgt = e.element()                 # wgt = w(u,v) = w(e) 
                 if d[v] + wgt < d[u]:
                     d[u] = d[v] + wgt             # update the distance
-                    del h[h.index(entry)]         # index(entry) get lsit h's index
+                    del h[h.index(entry)]         # index() gets h's index (occurs first time)
                     heappush(h, (d[u], entry[1], u))
-    return cloud                                  # only includes reachable vertices
+    #  Return dictionary mapping each reachable vertex to its distance from src.
+    return cloud                                  # only include reachable vertices
 
 
 def shortest_path_tree(g, s, d):
