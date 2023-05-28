@@ -1,6 +1,6 @@
 
 
-# floyd_warshall_dp.py
+# floyd_warshall_print.py
 
 
 """
@@ -21,18 +21,14 @@ Add all vertices one by one to the set of intermediate vertices.
 ---> Before start of an iteration, we have shortest distances between all pairs of 
      vertices such that the shortest distances consider only the vertices in the 
      set {0, 1, 2, .. k-1} as intermediate vertices.
-----> After the end of a iteration, vertex no. k is added to the set of intermediate 
+---> After the end of a iteration, vertex no. k is added to the set of intermediate 
       vertices and the set becomes {0, 1, 2, ... k}
-
 """
 
 
 # Number of vertices in the graph
 V = 4
-
-
-# Define infinity as the large enough value. This value will be
-# used for vertices not connected to each other
+# Define infinity as the large enough value for not connected to each other
 INF = 99999
 
 
