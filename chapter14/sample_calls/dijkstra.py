@@ -54,7 +54,11 @@ heappush(h, (7, 'release product'))
 heappush(h, (1, 'write spec'))
 heappush(h, (3, 'create tests'))
 heappop(h)
-(1, 'write spec')
+# Output: (1, 'write spec')
+h
+# Output: [(3, 'create tests'), (7, 'release product'), (5, 'write code')]
+
+
 
 3. Abstraction
 
