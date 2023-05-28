@@ -17,6 +17,14 @@ if
 do
 A[i][j] = (A[i][k] + A[k][j]) 
 
+The algorithm in the text book is complex but can be treated as a typical function calling 
+procedure. It can be shortly described as follows.
+
+for k in range(V):
+        for i in range(V):
+            for j in range(V):
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+
 This algorithm works for both the directed and undirected weighted graphs. But, it does 
 not work for the graphs with negative cycles (where the sum of the edges in a cycle is 
 negative).
