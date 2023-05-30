@@ -58,7 +58,7 @@ class Graph:
     # kruskal adopts the while loop
     def kruskal_mst(self):
         # This will store the resultant MST
-        result = []
+        mst = []
         # An iterator used for sorted edges
         i = 0
         # Number of edges in the MST
@@ -83,12 +83,12 @@ class Graph:
             # and increment the index of result for next edge
             if x != y:
                 e += 1
-                result.append([u, v, w])
+                mst.append([u, v, w])
                 self.union(parent, rank, x, y)
             # Else discard the edge
         min_cost = 0
         print("Edges in the constructed MST")
-        for u, v, w in result:
+        for u, v, w in mst:
             min_cost += w
             print("%d -- %d == %d" % (u, v, w))
         print("Minimum Spanning Tree", min_cost)
