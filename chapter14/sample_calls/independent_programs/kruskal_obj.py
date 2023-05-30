@@ -1,6 +1,6 @@
 
 
-# kruskal.py
+# kruskal_obj.py
 
 """
 

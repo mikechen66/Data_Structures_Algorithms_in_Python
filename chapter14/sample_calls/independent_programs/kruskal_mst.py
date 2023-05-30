@@ -3,14 +3,14 @@
 # kruskal_mst.py
 
 
-# Python program for Kruskal's algorithm to find Minimum Spanning Tree of a given connected,
+# Python program for Kruskal's algorithm to find Minimum Spanning Tree of a giverticesen connected,
 # undirected and weighted graph
 
 """
 Kruskal's algorithm is a minimum spanning tree algorithm that takes a graph as input 
 and finds the subset of the edges of that graph which 
 
-form a tree that includes every vertex;
+form a tree that includes everticesery verticesertex;
 has the minimum sum of weights among all the trees that can be formed from the graph
 
 How Kruskal's algorithm works
@@ -25,76 +25,73 @@ The steps for implementing Kruskal's algorithm are as follows:
 Sort all the edges from low weight to high;
 Take the edge with the lowest weight and add it to the spanning tree. If adding the 
 edge created a cycle, then reject this edge;
-Keep adding edges until we reach all vertices.
+Keep adding edges until we reach all verticesertices.
 """
 
 
 # Class to represent a graph
 class Graph:
     def __init__(self, vertices):
-        self.V = vertices
-        self.graph = []
-    # Function to add an edge to graph
+        self.vertices = vertices
+        self.edges = []
+    # It has u and v as vertices and w as weight
     def add_edge(self, u, v, w):
-        self.graph.append([u, v, w])
-    # A utility function to find set of an element i
-    # (truly uses path compression technique)
+        self.edges.append([u, v, w])
+    # A utility function to find set of an element i with path compression
     def find_subtree(self, parent, i):
         if parent[i] != i:
-            # Reassignment of node's parent to root node as
-            # path compression requires
+            # Reassign a parent to a root node as path compression requires
             parent[i] = self.find_subtree(parent, parent[i])
         return parent[i]
-    # A function that does union of two sets of x and y
-    # (uses union by rank)
+    # Merge two sets of x and y by rank(subtree depth)
     def union(self, parent, rank, x, y):
-        # Attach smaller rank tree under root of
-        # high rank tree (Union by Rank)
-        if rank[x] < rank[y]:
+        # Attach smaller rank tree under root of high rank tree
+        # x and y are defined in the while loop of kruskal_mst() funtion body
+        if rank[x] < rank[y]:  
             parent[x] = y
         elif rank[x] > rank[y]:
             parent[y] = x
-        # If ranks are same, then make one as root
-        # and increment its rank by one
+        # If ranks are same, then make one as root and increment its rank by 1
         else:
             parent[y] = x
             rank[x] += 1
-    # The main function to construct MST using Kruskal's algorithm
+    # kruskal adopts the while loop
     def kruskal_mst(self):
         # This will store the resultant MST
         result = []
-        # An index variable, used for sorted edges
+        # An iterator used for sorted edges
         i = 0
-        # An index variable, used for result[]
+        # Number of edges in the MST
         e = 0
-        # Sort all the edges in non-decreasing order of their weight
-        self.graph = sorted(self.graph, key=lambda item: item[2])
+        # Sort all the edges in the increasing order of weight
+        self.edges = sorted(self.edges, key=lambda item: item[2])
         parent = []
         rank = []
-        # Create V subsets with single elements
-        for node in range(self.V):
-            parent.append(node)
+        # Create vertices subsets with single elements
+        for vertice in range(self.vertices):
+            parent.append(vertice)
             rank.append(0)
-        # Number of edges to be taken is less than to V-1
-        while e < self.V - 1:
+        # Number of edges to be taken is less than vertices-1
+        while e < self.vertices - 1:
             # Pick the smallest edge and increment the index for next iteration
-            u, v, w = self.graph[i]
-            i = i + 1
+            u, v, w = self.edges[i]
+            i += 1
+            # x and y are relocated in the untion() function body
             x = self.find_subtree(parent, u)
             y = self.find_subtree(parent, v)
-            # If including this edge doesn't cause cycle, then include it in result
+            # If two vertices are not in the same subtree, we merge the two subtrees
             # and increment the index of result for next edge
             if x != y:
-                e = e + 1
+                e += 1
                 result.append([u, v, w])
                 self.union(parent, rank, x, y)
             # Else discard the edge
-        minimumCost = 0
+        min_cost = 0
         print("Edges in the constructed MST")
-        for u, v, weight in result:
-            minimumCost += weight
-            print("%d -- %d == %d" % (u, v, weight))
-        print("Minimum Spanning Tree", minimumCost)
+        for u, v, w in result:
+            min_cost += w
+            print("%d -- %d == %d" % (u, v, w))
+        print("Minimum Spanning Tree", min_cost)
 
 
 if __name__ == '__main__':
@@ -106,8 +103,7 @@ if __name__ == '__main__':
     g.add_edge(2, 3, 4)
     g.kruskal_mst()
 
-
-# Output
+# Output:
 
 """
 Edges in the constructed MST

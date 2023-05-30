@@ -3,6 +3,11 @@
 # kruskal_graph.py
 
 
+"""
+Define different classes such as Node, Graph, Edge and Kruskal to serperate
+the concerns for flexible modulality.  
+"""
+
 # Define the Node class 
 
 class Node:
@@ -23,10 +28,10 @@ class Node:
         if len(self.neighbors) == 0:
             return False
         return True
-    # Returns the number of vertices with which has a connection
+    # Return the number of vertices with which has a connection
     def number_of_neighbors(self):
         return len(self.neighbors)
-    # Adds a new connection to the neighboor list
+    # Add a new connection to the neighboor list
     def add_neighboor(self, neighboor):
         self.neighbors.append(neighboor)
     def __eq__(self, other):
@@ -50,7 +55,7 @@ class Graph:
             self.nodes = []
         else:
             self.nodes = nodes
-    # Ad a new node (vertex) in the grpah
+    # Add a new node (vertex) in the grpah
     def add_node(self, node):
         self.nodes.append(node)
     # Return True if the node with the given value exists.
@@ -141,7 +146,7 @@ class Kruskal:
         for index, s in enumerate(self.sets):
             if node.value in s:
                 return index
-    # Union the given sets and delete them from the list.
+    # Merge the given sets and delete them from the list.
     def union_set(self, set1, set2):
         # Get the sets based on their index in the list
         selected_set1 = self.sets[set1]

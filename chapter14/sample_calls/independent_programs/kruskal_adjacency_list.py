@@ -30,16 +30,17 @@ class Graph:
     def __init__(self, vertices):  
         self.vertices = vertices  
         self.edges = []  
-        self.adjacency_list = {v: [] for v in vertices}  
-    def add_edge(self, u, v, weight):  
-        self.edges.append((u, v, weight))  
-        self.adjacency_list[u].append((v, weight))  
-        self.adjacency_list[v].append((u, weight)) 
-    # Find the root of the connected component that belongs to i.  
-    def find_subtree(self, parent, i):  
-        if parent[i] == i:  
-            return i  
-        return self.find_subtree(parent, parent[i])  
+        self.adjacency_list = {vertice: [] for vertice in vertices}  
+    def add_edge(self, u, v, w):        # u and v are nodes and w is weight
+        self.edges.append((u, v, w))  
+        self.adjacency_list[u].append((v, w))  
+        self.adjacency_list[v].append((u, w)) 
+    # A utility function to find set of an element i with path compression
+    def find_subtree(self, parent, i):
+        if parent[i] != i:
+            # Reassig a parent to a root node as compression requires
+            parent[i] = self.find_subtree(parent, parent[i])
+        return parent[i]
     # Merge two connected components in disjoint-set data
     def union(self, parent, rank, x, y):  
         root_x = self.find_subtree(parent, x)  
@@ -51,16 +52,19 @@ class Graph:
         else:  
             parent[root_y] = root_x  
             rank[root_x] += 1  
+    # kruskal adopts the for loop
     def kruskal(self):  
-        mst = set()  # mst: minimum_spanning_tree 
-        parent = {}  
-        rank = {}    # depth of a subtree
-        for v in self.vertices:  
-            parent[v] = v  
-            rank[v] = 0  
-        sorted_edges = sorted(self.edges, key=lambda x: x[2])  
+        mst = set()                      # mst: minimum_spanning_tree 
+        parent = []  
+        rank = []                        # depth of a subtree
+        for vertice in self.vertices:  
+            parent.append(vertice)  
+            rank.append(0)  
+        # Sorted the edges according to the 2rd component (weight)
+        sorted_edges = sorted(self.edges, key=lambda item: item[2])  
+        print(sorted_edges)
         for edge in sorted_edges:  
-            u, v, weight = edge  
+            u, v, w = edge  
             root_u = self.find_subtree(parent, u)  
             root_v = self.find_subtree(parent, v)  
             if root_u != root_v:  
@@ -85,5 +89,8 @@ if __name__ == '__main__':
 # Output:
 
 """
-{(1, 3, 1), (2, 3, 4), (0, 3, 3)}
+# print(sorted_edges)
+[(1, 3, 1), (0, 3, 3), (2, 3, 4), (0, 1, 5), (0, 2, 10)]
+# print(mst)
+{(0, 3, 3), (2, 3, 4), (1, 3, 1)}
 """ 
