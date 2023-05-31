@@ -38,7 +38,7 @@ class Graph:
     # A utility function to find set of an element i with path compression
     def find_subtree(self, parent, i):
         if parent[i] != i:
-            # Reassig a parent to a root node as compression requires
+            # Reassign a parent to a root node as compression requires
             parent[i] = self.find_subtree(parent, parent[i])
         return parent[i]
     # Merge two connected components in disjoint-set data
@@ -60,7 +60,7 @@ class Graph:
         for vertice in self.vertices:  
             parent.append(vertice)  
             rank.append(0)  
-        # Sorted the edges according to the 2rd component (weight)
+        # Sorted the edges according to the 2nd component (w: weight)
         sorted_edges = sorted(self.edges, key=lambda item: item[2])  
         print(sorted_edges)
         for edge in sorted_edges:  
