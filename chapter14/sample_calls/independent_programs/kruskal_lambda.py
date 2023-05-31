@@ -38,7 +38,7 @@ def union(parent, rank, u, v):
     """
     h1 = find_subtree(parent, u)
     h2 = find_subtree(parent, v)
-    # Merge the two vertices while not are same subtree
+    # Merge the two vertices while they are not same subtree
     if h1 != h2:
         if rank[h1] < rank[h2]:
             parent[h1] = h2
@@ -55,7 +55,7 @@ def kruskal(n, edges):
     :return: the edge set of the MST
     """
     mst = []
-    # parent as e and ranks initilized as 0
+    # parent as a upper level of vertice 
     parent = [e for e in range(n)]
     # rank initialized as 0
     rank = [0] * n
