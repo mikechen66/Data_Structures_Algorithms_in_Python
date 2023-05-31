@@ -1,6 +1,6 @@
 
 
-# kruskal_func.py
+# kruskal_lambda.py
 
 """
 kruskal's idea is intuitive. The edges are sorted by weight from smallest to largest, 
@@ -60,8 +60,8 @@ def kruskal(n, edges):
     # rank initialized as 0
     rank = [0] * n
     # make the edges sorted
-    edges = sorted(edges, key=lambda item: item[2])
-    num = 0
+    edges = sorted(edges, key=lambda item: item[-1])
+    i = 0
     for edge in edges:
         # u, v, w = egde[i]
         h1 = find_subtree(parent, edge[0]) 
@@ -69,10 +69,10 @@ def kruskal(n, edges):
         if h1 != h2:
             mst.append(edge)
             union(parent, rank, edge[0], edge[1])
-            num += 1
+            i += 1
         else:
             continue
-        if num == n:
+        if i == n:
             break
     return mst
 
