@@ -16,9 +16,9 @@ class Set :
 
 # FindParent applies path compression to all the nodes in the search path of the parent
 # without changing their ranks.
-def FindParent (s):
+def FindParent(s):
     if (s.data != s.parent.data) :
-        s.parent = FindParent ((s.parent))
+        s.parent = FindParent((s.parent))
     return s.parent
 
 
@@ -27,12 +27,12 @@ def Merge(a, b):
     parent_of_a = FindParent(a)
     parent_of_b = FindParent(b)
     if (parent_of_a.data != parent_of_b.data):
-        if ( a.rank < b.rank ) :
-             a.parent = parent_of_b
-             b.rank += 1
-        else :
-             b.parent = parent_of_a
-             a.rank += 1
+        if (a.rank < b.rank):
+            a.parent = parent_of_b
+            b.rank += 1
+        else:
+            b.parent = parent_of_a
+            a.rank += 1
     print("\nMerging " + str(a.data) + " & " + str(b.data))
     print("Rank of : " + str(a.data) + " = " + str(a.rank))
     print("Parent of : " + str(a.data) + " = " + str(a.parent.data))
