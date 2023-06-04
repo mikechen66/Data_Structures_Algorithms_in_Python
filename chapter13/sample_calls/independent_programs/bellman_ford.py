@@ -21,7 +21,7 @@ ation over all edges guarantees to give the shortest path with at-most (i+1) edg
 
 class Graph:
     def __init__(self, vertices):
-        self.V = vertices # No. of vertices
+        self.vertices = vertices # No. of vertices
         self.graph = []
     # function to add an edge to graph
     def add_edge(self, u, v, w):
@@ -29,7 +29,7 @@ class Graph:
     # utility function used to print the solution
     def print_arr(self, dist):
         print("Vertex Distance from Source")
-        for i in range(self.V):
+        for i in range(self.vertices):
             print("{0}\t\t{1}".format(i, dist[i]))
     # The main function that finds shortest distances from src to all 
     # other vertices using Bellman-Ford algorithm. The function also 
@@ -37,12 +37,12 @@ class Graph:
     def bellman_ford(self, src):
         # Step 1: Initialize distances from src to all other vertices
         # as INFINITE
-        dist = [float("Inf")] * self.V
+        dist = [float("Inf")] * self.vertices
         dist[src] = 0
         # Step 2: Relax all edges |V| - 1 times. A simple shortest
         # path from src to any other vertex can have at-most |V|-1
         # edges
-        for _ in range(self.V - 1):
+        for _ in range(self.vertices - 1):
             # Update dist value and parent index of the adjacent vertices
             # of the picked vertex. Consider only those vertices which are 
             # still in queue
@@ -58,17 +58,17 @@ class Graph:
                 print("Graph contains negative weight cycle")
                 return
         # print all distance
-        self.printArr(dist)
+        self.print_arr(dist)
 
 
 if __name__ == '__main__':
     g = Graph(5)
-    g.add_Edge(0, 1, -1)
-    g.add_Edge(0, 2, 4)
-    g.add_Edge(1, 2, 3)
+    g.add_edge(0, 1, -1)
+    g.add_edge(0, 2, 4)
+    g.add_edge(1, 2, 3)
     g.add_edge(1, 3, 2)
     g.add_edge(1, 4, 2)
-    g.add_Edge(3, 2, 5)
+    g.add_edge(3, 2, 5)
     g.add_edge(3, 1, 1)
     g.add_edge(4, 3, -3)
     g.bellman_ford(0)
