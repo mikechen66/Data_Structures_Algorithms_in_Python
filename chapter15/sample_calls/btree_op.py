@@ -19,6 +19,47 @@ records in the node as m instead of m-1, so that when the node at the bottom is 
 as a record to the upper layer due to splitting, the upper layer has extra space to store 
 the record. At the same time, each node can also store a reference to its parent, so there 
 is no necessary to write a recursive snippet. 
+
+
+1. Insertion 
+
+The insertion operation refers to inserting a key value pair of (key, value) into a record. 
+If a key-value pair that needs to be inserted already exists in the B-tree, replace the old 
+value with the value that needs to be inserted. If the key does not exist in the B-tree, it 
+must be an insertion operation in the leaf node.
+
+
+1) Find the leaf node and insert it according to the value of the key to be inserted.
+
+2) Judge wehter the number of keys in the current node is less than or equal to m-1. If it is,
+  it ends. Otherwise, the following third step is carried out.
+
+3) Split the key in the middle of the node into left and right parts, and then insert the 
+   middle key into the parent node. The left subtree of the key points to the left half of 
+   the split, and the right subtree to the right half. Then, point the current node to the 
+   parent node and continue with step 3.
+
+
+2. Deletion
+
+Deleting a record means removing a record according to a given key. If there is no record 
+corresponding to in the B-Tree, the record fails to be deleted.
+
+1) If the current key to be deleted is located on a non-leaf node, overwrite the key to be 
+   deleted with the successor key (or the successive record), and then delete the successive 
+   key in the sub-branch where the successor key is located. In this case, the successing key 
+   must be located on the leaf node, and the process is similar to deleting nodes in binary 
+   search tree to delete nodes. Perform Step 2 after deleting this record
+
+2) If the number of keys on the node is greater than or equal to Math.ceil(m/2)-1, the deletion 
+   operation is over. Otherwise, go to Step 3 as follows. 
+
+3) If the number of keys of sibling node is greater than Math.ceil(m/2)-1, the deletion operation 
+   is over after the keys in the parent node moves down to the node and one of keys in the sibling 
+   node moves up. Otherwise, we move the key in the parent node down and merge it with the keys 
+   in both the current node and its sibling node to form a new node. The two pointers of children
+   corresponding to the parent becomes one child pointer to the new node. Then the pointer of the 
+   current node points to the parent, and repeat step 2.
 """
 
 
