@@ -1,7 +1,53 @@
 
 
-# Create a node
+# btree.py
 
+"""
+
+Searching for an element in a B-tree is the generalized form of searching an element 
+in a Binary Search Tree. The following steps are followed.
+
+1. Definition:
+
+Root node: 
+The topmost node of a tree or the node which does not have any parent node is called the 
+root node. 
+
+Internal node: 
+A node with at least one child is called Internal Node.
+
+Leaf node: 
+Leaf node is also called External node: The nodes which do not have any child nodes are 
+
+Degree of a Node: 
+The total count of subtrees attached to that node is called the degree of the node. The 
+degree of a leaf node must be 0. The degree of a tree is the maximum degree of a node 
+among all the nodes in the tree.
+
+2. Algorithm:
+
+Starting from the root node, compare k with the first key of the node.
+
+If k = the first key of the node, return the node and the index.
+
+If k.leaf = true, return NULL (i.e. not found).
+
+If k < the first key of the root node, search the left child of this key recursively.
+
+If there is more than one key in the current node and k > the first key, compare k with 
+the next key in the node.
+
+If k < next key, search the left child of this key (ie. k lies in between the first and 
+the second keys).
+
+Else, search the right child of the key.
+
+Repeat steps 1 to 4 until the leaf is reached.
+
+"""
+
+
+# Create a node
 class BTreeNode:
     def __init__(self, leaf=False):
         self.leaf = leaf
@@ -51,10 +97,10 @@ class BTree:
         x.child.insert(i + 1, z)
         x.keys.insert(i, y.keys[t - 1])
         z.keys = y.keys[t: (2 * t) - 1]
-        y.keys = y.keys[0: t - 1]
+        y.keys = y.keys[0: t-1]
         if not y.leaf:
-            z.child = y.child[t: 2 * t]
-            y.child = y.child[0: t - 1]
+            z.child = y.child[t: 2*t]
+            y.child = y.child[0: t-1]
     # Print the tree
     def print_tree(self, x, l=0):
         print("Level ", l, " ", len(x.keys), end=":")
