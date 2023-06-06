@@ -2,14 +2,10 @@
 
 # binary_search_tree
 
-
 # from linked_binary_tree import LinkedBinaryTree
 # from map_base import MapBase
 
-
-
 # binary_tree_update
-
 
 class BinaryTree:
 # class BinaryTreeUpdate:
@@ -81,9 +77,7 @@ class BinaryTree:
 
 # linked_binary_tree
 
-
 # from binary_tree import BinaryTree
-
 
 class LinkedBinaryTree(BinaryTree):
     """Linked representation of a binary tree structure."""
@@ -242,8 +236,6 @@ class LinkedBinaryTree(BinaryTree):
             node._right = t2._root
             t2._root = None                # set t2 instance to empty
             t2._size = 0
-
-
 
 
 # map_base
@@ -571,21 +563,18 @@ class TreeMap(LinkedBinaryTree, MapBase):
             self._rotate(x)                               # double rotation (of x)     
             self._rotate(x)
             return x                                      # x is new subtree root
+        
+  
+if __name__ == '__main__':
+    t = TreeMap()
+    root = t._add_root('a')
+    b = t._add_left(root,'b')
+    c = t._add_right(root,'c')
+    print(list(map(t.Position.element,[root,b,c])),root==t.parent(b))
 
 
-t = TreeMap()
-t[2]=2
-t[1]=1
-t[3]=3
-print('in order input [2,1,3] to the tree')
-root=t.root()
-left=t.left(root)
-right=t.right(root)
-print('delete the root node which value is 2')
-t.delete(root)
-print('delete have done')
-print('original left:\n\t',left.element()._value,'\n\tcurrent position:\n\t',t.root().element()._value)
-print('original left == new root:\n\t',left == t.root())     # left is the original node, should equal with root after delete root
-print('current root\'s next node:\n\t',t.after(t.root()))
-print('original\'s after:\n\t',t.after(left))  # error sentence ,the node be a loop because _delete() method in 
-                     # linked_binary_tree.LinkedBinaryTree's class
+# Output:
+
+"""
+['a', 'b', 'c'] True
+"""
