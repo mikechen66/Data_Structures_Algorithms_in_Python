@@ -7,7 +7,7 @@ Make the comprehenisve arrangements including original smaples, sample calls and
 The original scripts of the textbook is featured with the scripts interaction that is lacking in most of the 
 Python algorithm textbooks. However, it includes quite incomplete sample callers. Readers are hard to find 
 how to call them. So I provide the comprehensive sample calls that include complete callers (and callees) for 
-easy understanding of the call relationship involved in Python Algorithms and Structures. 
+easy understanding of the call relationship involved in Python Algorithms and Data Structures. 
 
 ## Solutions
 
