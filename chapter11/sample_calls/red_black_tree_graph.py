@@ -26,17 +26,17 @@ properties:
 
 1).left_rotate: 
 
-The following three links is marked by double lines are altered. This check is not in the 
-book but needed to avoid. With regard to code, swaping between x and y is equivalent to swaping 
+The following three links is marked by double lines are altered. This check is not in the book 
+but needed to avoid. With regard to code, swaping between x and y is equivalent to swaping 
 between left and right (for left and right rotation). Please see the weblink as follows. 
 
-    xP              xP
-    ||               ||
-     x               y
-    / \\     =>     // \
-   xL  y            x   yRR
-     // \          / \\
-    yRL yRR       xL yRL
+               xP               xP
+               ||               ||
+                x                y
+               / \\     =>     // \
+              xL  y            x   yRR
+                // \          / \\
+               yRL yRR       xL yRL
 
 
 2).right_rotate: 
@@ -45,13 +45,13 @@ The following three links marked by double lines are altered. It is the reverse 
 the following left rotation. With regard to code(not pseducode), swaping between x and y is 
 equivalent to swaping between left and right(for right and left rotation). 
 
-    xP            xP
-    ||            ||
-     x             y
-   // \           / \\
-   y   xR   =>  yLL  x
-  / \\             // \
-yLL yLR           yLR xR
+                xP              xP
+                ||              ||
+                 x               y
+               // \             / \\
+               y   xR   =>    yLL  x
+              / \\               // \
+            yLL yLR             yLR xR
 
 The other Left-Right and Right-Left Rotation is the combination of the above two basic rotations. 
 
@@ -103,12 +103,17 @@ It restores No.1, No.2 and No.4 properties mentioned in the above conception. It
 (or scenarios) within its while loop pseducode as follows.
 
 if x == x.p.left:
+    ...
     if w.color == RED:                                      case 1;
-    if w.left.color == BLACK and w.right.color == BLACK:    case 2;
+    elif w.left.color == BLACK and w.right.color == BLACK:  case 2;
     elif w.right.color == BLACK:                            case 3;
     else: (omited in the original book)                     case 4; 
 else(same as then clause with "right" and "left" exchanged):
     ...
+    (repeated as above)
+
+
+Please note the above pseducode is a little different with the Python code snippet
 
 4.Graph Presentatoin 
 
@@ -208,20 +213,20 @@ class RedBlackNode(object):
 
 class RedBlackTree(object):
     def __init__(self):
-        self.T_nil  = RedBlackNode(0)
-        self.T_nil.set_nil()
-        self.T_root = self.T_nil
+        self.tnill  = RedBlackNode(0)
+        self.tnill.set_nil()
+        self.troot = self.tnill
         self._size  = 0
     def left_rotate(self, x):
-        if x == self.T_nil:
+        if x == self.tnill:
             return None
         y = x.right                      # set y
         x.right = y.left                 # turn y's left subtree into x's right subtree
-        if y.left != self.T_nil:
+        if y.left != self.tnill:
             y.left.p = x
         y.p = x.p                        # link x's parent to y's parent
-        if x.p == self.T_nil:
-            self.T_root = y
+        if x.p == self.tnill:
+            self.troot = y
         elif x == x.p.left: 
             x.p.left = y
         else:
@@ -229,15 +234,15 @@ class RedBlackTree(object):
         y.left = x                       # put x on y's left (child)
         x.p = y
     def right_rotate(self, x):           # swap between left and right based on left_rotate()
-        if x == self.T_nil:              # x has already been the root.
+        if x == self.tnill:              # x has already been the root.
             return None
         y = x.left
         x.left = y.right
-        if y.right != self.T_nil:
+        if y.right != self.tnill:
             y.right.p = x
         y.p = x.p
-        if x.p == self.T_nil:
-            self.T_root = y
+        if x.p == self.tnill:
+            self.troot = y
         elif x == x.p.right:
             x.p.right = y
         else:
@@ -245,43 +250,43 @@ class RedBlackTree(object):
         y.right = x
         x.p = y
     def rb_insert(self, z):
-        y = self.T_nil
-        x = self.T_root
-        while x != self.T_nil:
+        y = self.tnill
+        x = self.troot
+        while x != self.tnill:
             y = x
             if z.key < x.key:
                 x = x.left
             else:
                 x = x.right
         z.p = y
-        if y == self.T_nil:
-            self.T_root = z
+        if y == self.tnill:
+            self.troot = z
         elif z.key < y.key:
             y.left = z
         else:
-            y.right = z       
-        z.left  = self.T_nil
-        z.right = self.T_nil
-        z.set_red()
+            y.right = z
+        z.left  = self.tnill
+        z.right = self.tnill
+        z.set_red()                      # originally z.color = 'RED'
         self.rb_insert_fixup(z)
         self._size += 1
     def rb_insert_fixup(self, z):
-        while z.p.is_red():
+        while z.p.is_red():              # originally z.p.color == 'RED'
             if z.p == z.p.p.left:
                 y = z.p.p.right
                 if y.is_red():                                  # case 1       
-                    z.p.set_black()
+                    z.p.set_black()      
                     y.set_black()
                     z.p.p.set_red()
                     z = z.p.p
                 elif z == z.p.right:                            # case 2: 
-                    z = z.p                                     
+                    z = z.p
                     self.left_rotate(z)
                 else:                                           # case 3
                     z.p.set_black()
                     z.p.p.set_red()
                     self.right_rotate(z.p.p)
-            else:
+            else:                       # same as "if" clause with "right" and "left" exchanged
                 y = z.p.p.left
                 if y.is_red():
                     z.p.set_black()
@@ -295,10 +300,10 @@ class RedBlackTree(object):
                     z.p.set_black()
                     z.p.p.set_red()
                     self.left_rotate(z.p.p)
-        self.T_root.set_black()
+        self.troot.set_black()
     def rb_transplant(self, u, v):
-        if u.p == self.T_nil:
-            self.T_root = v
+        if u.p == self.tnill:
+            self.troot = v
         elif u == u.p.left:
             u.p.left = v
         else:
@@ -308,32 +313,32 @@ class RedBlackTree(object):
         # nil or Black
         return color < 1
     def tree_maximum(self, x):
-        while x.right != self.T_nil:
+        while x.right != self.tnill:
             x = x.right
         return x
     def tree_minimum(self, x):
-        while x.left != self.T_nil:
+        while x.left != self.tnill:
             x = x.left
         return x
     def root(self):
-        return self.T_root
+        return self.troot
     def nil(self):
-        return self.T_nil
+        return self.tnill
     def size(self):
         return self._size
     def tree_successor(self, x):
-        if x.right != self.T_nil:
+        if x.right != self.tnill:
             return self.tree_minimum(x.right)
         y = x.p
-        while (y != self.T_nil) and (x == y.right):
+        while (y != self.tnill) and (x == y.right):
             x = y
             y = y.p
         return y
     def tree_predecessor(self, x):
-        if x.left != self.T_nil:
+        if x.left != self.tnill:
             return self.tree_maximum(x.left)
         y = x.p
-        while (y != self.T_nil) and (x == y.left):
+        while (y != self.tnill) and (x == y.left):
             x = y
             y = y.p
         return y
@@ -341,10 +346,10 @@ class RedBlackTree(object):
         self._size -= 1
         y = z
         y_original_color = y.color()
-        if z.left == self.T_nil:
+        if z.left == self.tnill:
             x = z.right
             self.rb_transplant(z, z.right)
-        elif z.right == self.T_nil:
+        elif z.right == self.tnill:
             x = z.left
             self.rb_transplant(z, z.left)
         else:
@@ -364,7 +369,7 @@ class RedBlackTree(object):
         if self.is_black(y_original_color):
             self.rb_delete_fixup(x)
     def rb_delete_fixup(self, x):
-        while (x != self.T_root) and x.is_black():
+        while (x != self.troot) and x.is_black():
             if x == x.p.left:
                 w = x.p.right
                 if w.is_red():                                  # Case 1
@@ -385,7 +390,7 @@ class RedBlackTree(object):
                     x.p.set_black()
                     w.right.set_black()
                     self.left_rotate(x.p)
-                    x = self.T_root
+                    x = self.troot
             else:                                               
                 w = x.p.left
                 if w.is_red():
@@ -406,22 +411,22 @@ class RedBlackTree(object):
                     x.p.set_black()
                     w.left.set_black()
                     self.right_rotate(x.p)
-                    x = self.T_root
+                    x = self.troot
         x.set_black()
     def __iter__(self):
         if self.nil() is self.root():
             return []
-        yield from self.T_root.__iter__()
+        yield from self.troot.__iter__()
     def draw(self, tree_name, view_now=True, out_format="svg", orientation="vertical"):
         g_dot = Digraph(comment=tree_name)
         if orientation == 'horizontal':
             g_dot.graph_attr['rankdir'] = 'LR'
         self._node_id = 0
-        if not self.T_root is self.T_nil:        
+        if not self.troot is self.tnill:        
             node_id = self._node_id
             self._node_id += 1
-            self.T_nil.draw(g_dot, node_id)
-            self.visit_draw(self.T_root, g_dot, node_id)
+            self.tnill.draw(g_dot, node_id)
+            self.visit_draw(self.troot, g_dot, node_id)
         g_dot.render(tree_name.strip('<>'), view=view_now, format=out_format)
     def visit_draw(self, n, dot, parent_id):
         node_id = self._node_id
@@ -429,7 +434,7 @@ class RedBlackTree(object):
         n.draw(dot, node_id)
         if parent_id != -1:
             dot.edge(str(parent_id), str(node_id))
-        if not n is self.T_nil:
+        if not n is self.tnill:
             n._node_id = node_id
             node_id_left  = self.visit_draw(n.left,  dot, n._node_id)
             node_id_right = self.visit_draw(n.right, dot, n._node_id)
