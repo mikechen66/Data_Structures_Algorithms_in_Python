@@ -140,6 +140,7 @@ the redundancy of code.
 6.Reference :
 
 # https://walkccc.me/CLRS/Chap13/13.2/?continueFlag=f08c6cbaddd3864d16b2bcb5bc1bf11f
+# https://sites.math.rutgers.edu/~ajl213/CLRS/CLRS.html
 # https://github.com/ShoYamanishi/RedBlackTree/blob/master/rbtree.py
 # https://graphviz.readthedocs.io/en/stable/examples.html
 # https://pypi.org/project/graphviz/
@@ -213,19 +214,19 @@ class RedBlackNode(object):
 
 class RedBlackTree(object):
     def __init__(self):
-        self.tnill  = RedBlackNode(0)
-        self.tnill.set_nil()
-        self.troot = self.tnill
+        self.tnil  = RedBlackNode(0)
+        self.tnil.set_nil()
+        self.troot = self.tnil
         self._size  = 0
     def left_rotate(self, x):
-        if x == self.tnill:
+        if x == self.tnil:
             return None
         y = x.right                      # set y
         x.right = y.left                 # turn y's left subtree into x's right subtree
-        if y.left != self.tnill:
+        if y.left != self.tnil:
             y.left.p = x
         y.p = x.p                        # link x's parent to y's parent
-        if x.p == self.tnill:
+        if x.p == self.tnil:
             self.troot = y
         elif x == x.p.left: 
             x.p.left = y
@@ -234,14 +235,14 @@ class RedBlackTree(object):
         y.left = x                       # put x on y's left (child)
         x.p = y
     def right_rotate(self, x):           # swap between left and right based on left_rotate()
-        if x == self.tnill:              # x has already been the root.
+        if x == self.tnil:               # x has already been the root.
             return None
         y = x.left
         x.left = y.right
-        if y.right != self.tnill:
+        if y.right != self.tnil:
             y.right.p = x
         y.p = x.p
-        if x.p == self.tnill:
+        if x.p == self.tnil:
             self.troot = y
         elif x == x.p.right:
             x.p.right = y
@@ -250,23 +251,23 @@ class RedBlackTree(object):
         y.right = x
         x.p = y
     def rb_insert(self, z):
-        y = self.tnill
+        y = self.tnil
         x = self.troot
-        while x != self.tnill:
+        while x != self.tnil:
             y = x
             if z.key < x.key:
                 x = x.left
             else:
                 x = x.right
         z.p = y
-        if y == self.tnill:
+        if y == self.tnil:
             self.troot = z
         elif z.key < y.key:
             y.left = z
         else:
             y.right = z
-        z.left  = self.tnill
-        z.right = self.tnill
+        z.left  = self.tnil
+        z.right = self.tnil
         z.set_red()                      # originally z.color = 'RED'
         self.rb_insert_fixup(z)
         self._size += 1
@@ -302,7 +303,7 @@ class RedBlackTree(object):
                     self.left_rotate(z.p.p)
         self.troot.set_black()
     def rb_transplant(self, u, v):
-        if u.p == self.tnill:
+        if u.p == self.tnil:
             self.troot = v
         elif u == u.p.left:
             u.p.left = v
@@ -313,32 +314,32 @@ class RedBlackTree(object):
         # nil or Black
         return color < 1
     def tree_maximum(self, x):
-        while x.right != self.tnill:
+        while x.right != self.tnil:
             x = x.right
         return x
     def tree_minimum(self, x):
-        while x.left != self.tnill:
+        while x.left != self.tnil:
             x = x.left
         return x
     def root(self):
         return self.troot
     def nil(self):
-        return self.tnill
+        return self.tnil
     def size(self):
         return self._size
     def tree_successor(self, x):
-        if x.right != self.tnill:
+        if x.right != self.tnil:
             return self.tree_minimum(x.right)
         y = x.p
-        while (y != self.tnill) and (x == y.right):
+        while (y != self.tnil) and (x == y.right):
             x = y
             y = y.p
         return y
     def tree_predecessor(self, x):
-        if x.left != self.tnill:
+        if x.left != self.tnil:
             return self.tree_maximum(x.left)
         y = x.p
-        while (y != self.tnill) and (x == y.left):
+        while (y != self.tnil) and (x == y.left):
             x = y
             y = y.p
         return y
@@ -346,10 +347,10 @@ class RedBlackTree(object):
         self._size -= 1
         y = z
         y_original_color = y.color()
-        if z.left == self.tnill:
+        if z.left == self.tnil:
             x = z.right
             self.rb_transplant(z, z.right)
-        elif z.right == self.tnill:
+        elif z.right == self.tnil:
             x = z.left
             self.rb_transplant(z, z.left)
         else:
@@ -422,10 +423,10 @@ class RedBlackTree(object):
         if orientation == 'horizontal':
             g_dot.graph_attr['rankdir'] = 'LR'
         self._node_id = 0
-        if not self.troot is self.tnill:        
+        if not self.troot is self.tnil:        
             node_id = self._node_id
             self._node_id += 1
-            self.tnill.draw(g_dot, node_id)
+            self.tnil.draw(g_dot, node_id)
             self.visit_draw(self.troot, g_dot, node_id)
         g_dot.render(tree_name.strip('<>'), view=view_now, format=out_format)
     def visit_draw(self, n, dot, parent_id):
@@ -434,7 +435,7 @@ class RedBlackTree(object):
         n.draw(dot, node_id)
         if parent_id != -1:
             dot.edge(str(parent_id), str(node_id))
-        if not n is self.tnill:
+        if not n is self.tnil:
             n._node_id = node_id
             node_id_left  = self.visit_draw(n.left,  dot, n._node_id)
             node_id_right = self.visit_draw(n.right, dot, n._node_id)
