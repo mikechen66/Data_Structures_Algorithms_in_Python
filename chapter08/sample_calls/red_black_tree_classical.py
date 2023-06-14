@@ -36,7 +36,6 @@ class Node(object):
         self.right = None
         self.p = None
         self.color = 'black'
-        self.size=None
 
 
 class RBTree(object):
