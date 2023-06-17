@@ -4,8 +4,9 @@
 
 """
 Red-Black Tree, invented as symmetric binary B-trees by Rudolf Bayer, modified as Red Black Tree by Leo Guibas and 
-Robert Sedgewick. The following script is implemented almost completely based on Introduction to Algorithms 3rd and 
-4th edition, Chap 12, 13 and 14 by Cormen et. al in Introduction to Algorithms. 
+Robert Sedgewick. The Cormen red-black tree is based on 2-3 tree (not 2-3-4 tree including 4-nodes) in order to 
+simpleify the complexity.  The following script is implemented almost completely based on Introduction to Algorithms 
+3rd and 4th edition, Chap 12, 13 and 14 by Cormen et. al in Introduction to Algorithms. 
 
 0. Conception:
 
