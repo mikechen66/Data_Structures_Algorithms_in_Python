@@ -157,70 +157,57 @@ class RBTree():
     # Insert New Node
     def rb_insert(self, key):
         node = Node(key)
-        node.p = self.nil
+        node.p = self.nil 
         node.val = key
-        node.left = self.nil
-        node.right = self.nil
-        node.color = 1                                  # Set (root) color as Red
-        y = self.nil
-        x = self.root
-        while x != self.nil:                            # descend until reaching the sentinel(self.nil) - Find position for new node
-            y = x
-            if node.val < x.val:
-                x = x.left
-            else:
-                x = x.right
-        node.p = y                                      # Set p of Node as y
-        if y == self.nil:                               # If p is none then it is root node
-            self.root = node
-        elif node.val < y.val:                          # Check if it is right Node or Left Node by checking the value
-            y.left = node
-        else:
-            y.right = node
-        if node.p == self.nil:                          # Root node is always Black
-            node.color = 0
-            return None
-        if node.p.p == self.nil:                        # If the node's grandparent is root node
-            return None
-        self.rb_insert_fixup(node)                      # Else call for FixUp
+        y = self.nil                                    # y will be parent of z
+        x = self.root                                   # node being compared with z(?)
+        while x != self.nil:                            # descend until reaching the sentinel(self.nil)
+            y = x                                       # y records the p node related z node
+            if node.val < x.val:                        # if stmt (judge to insert into left or right by comparing key)
+                x = x.left                              # ...then x's left child becomes x 
+            else:                                       # otherwise
+                x = x.right                             # ...then x's right child becomes x
+        node.p = y                                      # y is z's parent now 
+        if y == self.nil:                               # if y is root 
+            self.root = node                            # ...then z is root 
+        elif node.val < y.val:                          # if...(judge whether to insert left or right subtree)
+            y.left = node                               # ...then z is y's left child 
+        else:                                           # otherwise
+            y.right = node                              # ...then z becomes y's child
+        node.left = self.nil                            # z's left child is a sentinel 
+        node.right = self.nil                           # z's right child is a sentinel too
+        node.color = 1                                  # the new node starts out red that may violate its properties
+        self.rb_insert_fixup(node)                      # so correct any violations of red-black properties
     # Fix Up Insertion
     def rb_insert_fixup(self, z):                       # keep the rb tree's features
         while z.p.color == 1:                           # While p is red
-            # if z.p == z.p.p.left:                     # if z's parent is a left child?
-            if z.p == z.p.p.right: 
-                # y = z.p.p.right                       # ...then y is z's uncle node 
-                y = z.p.p.left
+            if z.p == z.p.p.right:                      # if z's parent is a right child?                      
+                y = z.p.p.left                          # ...then y is z's uncle node 
                 if y.color == 1:                        # case 1: if y's color is RED
                     y.color = 0                         # ...y's color is BLACK
                     z.p.color = 0                       # ...then z's parent is BLACK
                     z.p.p.color = 1                     # ...z's grandparent is RED
                     z = z.p.p                           # ...z's grandparent is z now 
-                # elif z == z.p.right:                  # case 2: if z is a right child 
-                elif z == z.p.left: 
-                    z = z.p                             # ...then z's parent is z 
-                    # self.left_rotate(z)               # ...perform z's left rotation 
-                    self.right_rotate(z)
+                elif z == z.p.left:                     # case 2: if z is a left child  
+                    z = z.p                             # ...then z's parent is z                
+                    self.right_rotate(z)                # ...perform z's right rotation
                 else:                                   # case 3: else 
                     z.p.color = 0                       # ...color z's parent as BLACK
                     z.p.p.color = 1                     # ...color z's grandparent as RED
-                    # self.right_rotate(z.p.p)          # ...perform z.p.p's right rotation
-                    self.left_rotate(z.p.p)
+                    self.left_rotate(z.p.p)             #  ...perform z.p.p's left rotation
             else:                                       # else (correspond to the above first-level if):
                 y = z.p.p.right                         # ...z's grandparent is y 
                 if y.color == 1:                        # case 1
                     y.color = 0
                     z.p.color = 0
                     z.p.p.color = 1
-                    z = z.p.p
-                # elif z == z.p.left:                   # case 2
-                elif z == z.p.right: 
+                    z = z.p.p                   
+                elif z == z.p.right:                    # case 2
                     z = z.p
-                    # self.right_rotate(z)
                     self.left_rotate(z)
                 else:                                   # case 3 
                     z.p.color = 0
                     z.p.p.color = 1
-                    # self.left_rotate(z.p.p)
                     self.right_rotate(z.p.p)
             if z == self.root:
                 break
@@ -248,7 +235,7 @@ class RBTree():
                 node = node.right
             else:
                 node = node.left
-        if z == self.nil:                               # If Kwy is not present then deletion not possible so return
+        if z == self.nil:                               # If Key is not present then deletion not possible so return
             print("Value not present in Tree!!")
             return None
         y = z
