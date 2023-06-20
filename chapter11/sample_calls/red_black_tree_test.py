@@ -9,8 +9,11 @@ Robert Sedgewick. The following script is implemented almost completely based on
 4th edition, Chap 13 and 14 by Cormen et. al in Introduction to Algorithms. However, users can't call the Cormen's
 classical code with inserting or deleting number explicitly, so the script has the features as follows. 
 
--- # 1(red) for True and 0(black) for False with self.colored;
--- Add Node() into the rb_insert() and modify the code in rb_insert_fixup() accordingly;
+Assume x is a node and y is another node either at the left or right side of x, and assume z is a node that is to
+be inserted into or deleted from the RBTree.
+
+-- red for True and black for False with self.colored;
+-- Add Node() into the rb_insert() and modify the code in insert_fixup() accordingly;
 -- Add node parameter into rb_delete() in order to directly write an related argument for calling. In addoition,
    add delete_node() to call rb_delete();
 -- Add get_root(), search(), iter_search() for richer effects. 
@@ -30,6 +33,7 @@ insert() and insert(). It satisfies the following red-black properties:
 
 
 1.Rotation
+
 
 1).left_rotate: 
 
@@ -51,9 +55,9 @@ The other Left-Right and Right-Left Rotation is the combination of the above two
 
 Insert a node z into the tree T as if it were an ordinary binary search tree, and then color z red.
 
-2).rb_insert_fixup
+2).insert_fixup
 
-To enable the tree's properties are preserved, we call an auxiliary procedure rb_insert_FIXUP to re-color nodes 
+To enable the tree's properties are preserved, we call an auxiliary procedure insert_fixup to re-color nodes 
 and perform rotations. It has three cases(or scenarios) whitin its if..esle stmt of while loop pseducode:
 
 if z.p == z.p.p.left       # BLACK as 0 and RED as 1 
@@ -79,11 +83,11 @@ TREE_DELETE implementation.
 2).tree_delete 
 
 While deleting a node z, there are three scenarios including z has no child node, one child node or two children 
-nodes. Each scenarios need different treatments that rely on a auxiliary procedure rb_delete_FIXUP. 
+nodes. Each scenarios need different treatments that rely on a auxiliary procedure delete_fixup. 
 
-3).rb_delete_fixup
+3).delete_fixup
 
-rb_delete_FIXUP restore the red-black properties with changing colors and performing rotations. It restores No.1, 
+delete_fixup restore the red-black properties with changing colors and performing rotations. It restores No.1, 
 No.2 and No.4 properties mentioned in the above conception. It has 4 cases (or scenarios) within its while loop 
 pseducode as follows.
 
@@ -99,7 +103,11 @@ else(same as above with "right" and "left" exchanged):
 
 Please note the above pseducode is a little different with the Python code snippet.
 
-4.Reference :
+4.Test Cases
+
+There are two tese cases including one for integer object and another for string object. 
+
+5.Reference :
 
 # https://walkccc.me/CLRS/Chap13/13.2/?continueFlag=f08c6cbaddd3864d16b2bcb5bc1bf11f
 # https://sites.math.rutgers.edu/~ajl213/CLRS/CLRS.html
@@ -120,8 +128,8 @@ class KeyObject:
     @staticmethod
     def set_key(x, key):
         x.key = key
-    def __gt__(self, obj2):
-        return self.key > obj2.key
+    def __gt__(self, obj):
+        return self.key > obj.key
     def __str__(self):
         return self.string
 
@@ -133,7 +141,7 @@ class Node:
         self.right = None
         self.p = None
         self.data = data
-        self.colored = True                            # 1(red) as colored and 0(black) for False
+        self.colored = True                              # red for True and black for False
     def __str__(self):
         # Return <data>: <color>.
         return str(self.data) + ": " + ("red" if self.colored else "black")
@@ -143,10 +151,10 @@ class RBTree:
     """contain the same number of black nodes."""
     def __init__(self, key_func=None, nil=None):
         """
-        Initialize this RBTree with asentinel that is a Node.
+        Initialize the RBTree with a sentinel that is a Node.
         Arguments: 
-        key_func: an optional function that returns the key for the objects stored.  
-                  If omitted, then identity function is used.
+        key_func: an optional function that returns the key for the objects stored. If omitted, then 
+                  identity function is used.
         nil: sentinel for the p of the root and children of the leaves of tree. 
         """
         if key_func is None:
@@ -161,7 +169,7 @@ class RBTree:
         self.nil.colored = False                         # the root must be black
     def get_root(self):
         return self.root
-    # Return a node with a given key k in the subtree rooted at x, or self.nil if no node with key k exists.
+    # Return a node with a given key k in the subtree rooted at x, or self.nil if no node with key k.
     def search(self, x, k):
         if x == self.nil or k == self.get_key(x.data):
             return x
@@ -177,24 +185,24 @@ class RBTree:
                 x = x.right                              # if present, k must be in the right subtree
         return x
     # Return a node in subtree rooted at x with the smallest key.
-    def minimum(self, node):
-        while node.left != self.nil:
-            node = node.left
-        return node                                      # leftmost key
+    def minimum(self, x):
+        while x.left != self.nil:
+            x = x.left
+        return x                                        # return leftmost key
     # Return a node in subtree rooted at x with the largest key.
-    def maximum(self, node):
-        while node.left != self.nil:
-            node = node.left
-        return node                                      # rightmost key
+    def maximum(self, x):
+        while x.right != self.nil:
+            x = x.right
+        return x                                         # return rightmost key
     # Code for left rotate
     def left_rotate(self, x):
-        y = x.right                                      # y = Right child of x
-        x.right = y.left                                 # Change right child of x to left child of y
+        y = x.right                                      # y is a right child of x
+        x.right = y.left                                 # change right child of x to left child of y
         if y.left != self.nil:
             y.left.p = x
-        y.p = x.p                                        # Change p of y as p of x
-        if x.p == self.nil:                              # If p of x == None ie. root node
-            self.root = y                                # Set y as root
+        y.p = x.p                                        # change p of y as p of x
+        if x.p == self.nil:                              # if p of x == None ie. root node
+            self.root = y                                # set y as root
         elif x == x.p.left:
             x.p.left = y
         else:
@@ -203,13 +211,13 @@ class RBTree:
         x.p = y
     # Code for right rotate
     def right_rotate(self, x):
-        y = x.left                                       # Y = Left child of x
-        x.left = y.right                                 # Change left child of x to right child of y
+        y = x.left                                       # y is a Left child of x
+        x.left = y.right                                 # change left child of x to right child of y
         if y.right != self.nil:
             y.right.p = x
-        y.p = x.p                                        # Change p of y as p of x
-        if x.p == self.nil:                              # If x is root node
-            self.root = y                                # Set y as root
+        y.p = x.p                                        # change p of y as p of x
+        if x.p == self.nil:                              # if x is root node
+            self.root = y                                # set y as root
         elif x == x.p.right:
             x.p.right = y
         else:
@@ -217,7 +225,7 @@ class RBTree:
         y.right = x
         x.p = y
     def tree_insert(self, data):
-        self.insert_node(Node(data))                     # defaults to red
+        self.insert_node(Node(data))                     # default to red
     def insert_node(self, z):
         x = self.root                                    # node being compared with z
         y = self.nil                                     # y will be the p of z
@@ -227,8 +235,8 @@ class RBTree:
                 x = x.left
             else:
                 x = x.right
-        z.p = y                                          # found the location -- insert z with p y
-        if y == self.nil:
+        z.p = y                                          # y is z's parent now 
+        if y == self.nil:                                # if y is root
             self.root = z                                # tree was empty
         elif self.get_key(z.data) < self.get_key(y.data):
             y.left = z                                   # assign z as y's left child
@@ -236,9 +244,9 @@ class RBTree:
             y.right = z                                  # assign z as y's right child
         z.right = self.nil
         z.left = self.nil
-        self.rb_insert_fixup(z)                          # correct any violations of red-black properties
+        self.insert_fixup(z)                             # correct any violations of red-black properties
     # Fix up the insertion features
-    def rb_insert_fixup(self, z):
+    def insert_fixup(self, z):
         while z.p.colored:                               # two reds in a row
             if z.p == z.p.p.left:                        # is z's p a left child?
                 y = z.p.p.right                          # y is z's uncle
@@ -272,13 +280,13 @@ class RBTree:
     # Replace the subtree rooted at node u with the subtree rooted at node v
     def transplant(self, u, v):
         if u.p == self.nil:
-            self.root = v                                # replacing the root
+            self.root = v                                # replace the root with v 
         elif u == u.p.left:                              # is u a left child?
             u.p.left = v                                 # update left child to v
         else:                                            # u is a right child
             u.p.right = v                                # update right child to v
         v.p = u.p                                        # update v's parent
-    # Delete z and maintain the red-black tree, assume node z exists in the tree.
+    # Delete z and maintain the red-black tree with assuming node z existing in the tree.
     def tree_delete(self, z):
         if z is None or z == self.nil:
             raise RuntimeError("Cannot delete sentinel or None node.")
@@ -305,9 +313,9 @@ class RBTree:
             y.left.p = y
             y.colored = z.colored                        # give y same color as z
         if not y_original_color:
-            self.rb_delete_fixup(x)                      # If any red-black violations occurred, correct them.
+            self.delete_fixup(x)                         # If any red-black violations occurred, correct them.
     # Maintain the red-black properties after deletion. 
-    def rb_delete_fixup(self, x):
+    def delete_fixup(self, x):
         # Argument: x is the node that moved into the deleted position
         while x != self.root and not x.colored:          # x is "doubly black."
             if x == x.p.left:                            # is x a left child?
@@ -355,7 +363,7 @@ class RBTree:
         x.colored = False                                # ensure that the root is black
     # Return a boolean indicating whether this tree obeys the binary search tree properties.
     def is_bst(self, x=None):
-        # x: root of a subtree.  None indicates root of the entire RBTree.
+        # x: root of a subtree with None indicating root of the entire BST tree.
         if x is None:
             x = self.root
         if x == self.nil:
@@ -382,8 +390,8 @@ class RBTree:
     def is_rb_subtree(self, x):
         """
         Argument:
-        x: root of the subtree
-        Returns:
+        x: a root node of the subtree
+        Return:
           -1 for invalid red black tree
           black height for valid red black tree
         """
@@ -396,18 +404,18 @@ class RBTree:
         if left_black_height == -1 or right_black_height == -1 or left_black_height != right_black_height:
             return -1
         else:
-            return left_black_height + int(not x.colored) # Increase the black-height if x is black.
-    def inorder_tree_walk(self, x, func=print):
+            return left_black_height + int(not x.colored)  # Increase the black-height if x is black.
+    def inorder_walk(self, x, func=print):
         """
         Argument:
-        x: root of the subtree
-        func: function to run on each node in the subtree.  If omitted, print.
+        x: a root node of the subtree
+        func: a function to run on each node in the subtree; if omitted, print.
         Return: None
         """
         if x != self.nil:
-            self.inorder_tree_walk(x.left, func)
+            self.inorder_walk(x.left, func)
             func(x)
-            self.inorder_tree_walk(x.right, func)
+            self.inorder_walk(x.right, func)
     # Print a string representing a subtree with nodes of the same depth in the same column.
     def pretty_print(self, node, depth=0):
         """
@@ -431,31 +439,32 @@ class RBTree:
         return self.pretty_print(self.root)
 
 
-# Testing
+# Test Case 1: the tree with integer object 
 if __name__ == "__main__":
-    # Insert. 
+    # Insert
     rb_tree1 = RBTree()
     array1 = np.arange(0, 100, 13)
     np.random.shuffle(array1)
+    # Insert an value
     for value in array1:
         rb_tree1.tree_insert(value)
     print(rb_tree1.is_rb_tree())
     print(rb_tree1)
-    rb_tree1.inorder_tree_walk(rb_tree1.get_root())
-    # Search.
+    rb_tree1.inorder_walk(rb_tree1.get_root())
+    # Search
     node39 = rb_tree1.search(rb_tree1.get_root(), 39)
     print("Found: " + str(node39))
-    # Unsuccessful search. 
+    # Unsuccessful search
     print("Found: " + str(rb_tree1.search(rb_tree1.get_root(), 55)))
-    # Iterative. 
+    # Iterative 
     print("Found: " 
         + str(rb_tree1.iter_search(rb_tree1.get_root(), 39)))
     print("Found: " 
         + str(rb_tree1.iter_search(rb_tree1.get_root(), 55)))
-    # Minimum and maximum. 
+    # Minimum and maximum
     print("Max: " + str(rb_tree1.maximum(rb_tree1.get_root()))) 
     print("Min: " + str(rb_tree1.minimum(rb_tree1.get_root()))) 
-    # Delete. 
+    # Delete
     rb_tree1.tree_delete(node39)
     print("After deleting 39: ")
     print(rb_tree1.is_rb_tree())
@@ -465,8 +474,8 @@ if __name__ == "__main__":
     print("After deleting 52: ")
     print(rb_tree1.is_rb_tree())
     print(rb_tree1)
-    rb_tree1.inorder_tree_walk(rb_tree1.get_root())
-    # Delete a node that does not exist.
+    rb_tree1.inorder_walk(rb_tree1.get_root())
+    # Delete a node that does not exist
     node99 = rb_tree1.search(rb_tree1.get_root(), 99)
     try:
         rb_tree1.tree_delete(node99)
@@ -474,68 +483,6 @@ if __name__ == "__main__":
         print(e)
     print(rb_tree1.is_rb_tree())
     print(rb_tree1)
-    # Tree with objects. 
-    rb_tree2 = RBTree(KeyObject.get_key)
-    states = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "HI", "NH", "NY"]
-    list2 = []
-    for i in range(len(states)):
-        list2.append(KeyObject(states[i], i))
-    array2 = np.array(list2)
-    np.random.shuffle(array2)
-    for x in array2:
-        rb_tree2.tree_insert(x)
-    print(rb_tree2.is_rb_tree())
-    print(rb_tree2)
-    nodeCO = rb_tree2.search(rb_tree2.get_root(), 5)
-    rb_tree2.tree_delete(nodeCO)
-    print("After deleting CO:")
-    print(rb_tree2.is_rb_tree())
-    print(rb_tree2)
-    # Check that is_rb_tree works correctly by making a black node turn red.
-    for x in array2:
-        # Find a non-root black node.
-        node = rb_tree2.search(rb_tree2.get_root(), KeyObject.get_key(x))
-        if not node.colored and node != rb_tree2.get_root():
-            break
-    node.colored = True
-    print(rb_tree2.is_rb_tree())
-    # Restore blackness to that node, but make two reds in a row.
-    node.colored = False
-    for x in array2:
-        node = rb_tree2.search(rb_tree2.get_root(), KeyObject.get_key(x))
-        if node.colored:
-            break
-    node.p.colored = True
-    print(rb_tree2.is_rb_tree())
-    # Restore blackness, but make the root red.
-    node.p.colored = False
-    rb_tree2.get_root().colored = True
-    print(rb_tree2.is_rb_tree())
-    # Make the root black but the sentinel red.
-    rb_tree2.get_root().colored = False
-    rb_tree2.nil.colored = True
-    print(rb_tree2.is_rb_tree())
-    # Exhaustive testing.
-    rb_tree3 = RBTree()
-    array2 = np.arange(-100, 1000)
-    np.random.shuffle(array2)
-    for value in array2:
-        rb_tree3.tree_insert(value)  # Covers every insert fixup case.
-        if not rb_tree3.is_rb_tree():
-            print(rb_tree3)
-            break
-    print(rb_tree3.is_rb_tree())
-    np.random.shuffle(array2)
-    for value in array2:
-        to_delete = rb_tree3.search(rb_tree3.get_root(), value)
-        rb_tree3.tree_delete(to_delete)
-        if not rb_tree3.is_rb_tree():
-            print(rb_tree3)
-            break
-    print(rb_tree3.is_rb_tree())
-
-
-
 
 # Output:
 
@@ -597,36 +544,108 @@ True
   26: red
     13: black
       0: red
+"""
 
+#######################################################################################################
+
+
+# Adopt the same code as the above class KeyObject(), Node() and RBTree()
+
+
+# Test case 2: the tree with string objects 
+if __name__ == "__main__":
+    rb_tree2 = RBTree(KeyObject.get_key)
+    states = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "HI", "NH", "NY"]
+    list2 = []
+    for i in range(len(states)):
+        list2.append(KeyObject(states[i], i))
+    array2 = np.array(list2)
+    np.random.shuffle(array2)
+    for x in array2:
+        rb_tree2.tree_insert(x)
+    print(rb_tree2.is_rb_tree())
+    print(rb_tree2)
+    nodeCO = rb_tree2.search(rb_tree2.get_root(), 5)
+    rb_tree2.tree_delete(nodeCO)
+    print("After deleting CO:")
+    print(rb_tree2.is_rb_tree())
+    print(rb_tree2)
+    # Check that is_rb_tree works correctly by making a black node turn red.
+    for x in array2:
+        # Find a non-root black node.
+        node = rb_tree2.search(rb_tree2.get_root(), KeyObject.get_key(x))
+        if not node.colored and node != rb_tree2.get_root():
+            break
+    node.colored = True
+    print(rb_tree2.is_rb_tree())
+    # Restore blackness to that node, but make two reds in a row
+    node.colored = False
+    for x in array2:
+        node = rb_tree2.search(rb_tree2.get_root(), KeyObject.get_key(x))
+        if node.colored:
+            break
+    node.p.colored = True
+    print(rb_tree2.is_rb_tree())
+    # Restore blackness but make the root red
+    node.p.colored = False
+    rb_tree2.get_root().colored = True
+    print(rb_tree2.is_rb_tree())
+    # Make the root black but the sentinel red
+    rb_tree2.get_root().colored = False
+    rb_tree2.nil.colored = True
+    print(rb_tree2.is_rb_tree())
+    # Exhaustive testing
+    rb_tree3 = RBTree()
+    array2 = np.arange(-100, 1000)
+    np.random.shuffle(array2)
+    for value in array2:
+        rb_tree3.tree_insert(value)  # Covers every insert fixup case
+        if not rb_tree3.is_rb_tree():
+            print(rb_tree3)
+            break
+    print(rb_tree3.is_rb_tree())
+    np.random.shuffle(array2)
+    for value in array2:
+        to_delete = rb_tree3.search(rb_tree3.get_root(), value)
+        rb_tree3.tree_delete(to_delete)
+        if not rb_tree3.is_rb_tree():
+            print(rb_tree3)
+            break
+    print(rb_tree3.is_rb_tree())
+
+
+
+# Output:
+
+"""
 True
       NY: red
     NH: black
-      HI: red
-  CT: red
+  HI: red
+      CT: red
     CO: black
 CA: black
     AR: black
-      AZ: red
-  AK: red
-    AL: black
+  AZ: red
+    AK: black
+      AL: red
 
 After deleting CO:
 True
-    NY: black
-  NH: red
-      HI: red
+      NY: red
+    NH: black
+  HI: red
     CT: black
 CA: black
     AR: black
-      AZ: red
-  AK: red
-    AL: black
+  AZ: red
+    AK: black
+      AL: red
 
 False
 False
 False
 False
-
 True
 True
 """
